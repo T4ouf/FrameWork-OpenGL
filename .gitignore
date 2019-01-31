@@ -1,0 +1,6 @@
+# Directories
+Framework/.vs/
+Framework/bin/
+
+# Files
+*.user
