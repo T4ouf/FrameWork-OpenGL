@@ -111,7 +111,7 @@ void Scene::UpdatePhysic(double deltaTime){
 		Object* o1 = m_sceneObjects.at(i);
 		bool ObjectAnchor = m_sceneObjects.at(i)->isAnchor();
 
-		for (size_t j = i; j < m_sceneObjects.size(); j++) {
+		for (size_t j = i+1; j < m_sceneObjects.size(); j++) {
 
 			Object* o2 = m_sceneObjects.at(j);
 
