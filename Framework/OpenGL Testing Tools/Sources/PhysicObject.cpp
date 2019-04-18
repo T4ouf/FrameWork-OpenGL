@@ -36,19 +36,20 @@ void PhysicObject::ApplyForce(Force* f)
 	m_forces.push_back(f);
 }
 
-void PhysicObject::Update(float delta){
+glm::vec3 PhysicObject::Update(float delta){
 	if (this->m_isAnchor) {
 		this->m_speed = glm::vec3(0.0f, 0.0f, 0.0f);
-		return;
+		return this->m_speed;
 	}
-	Force* total = new Force(glm::vec3(0));
+	Force total = Force(glm::vec3(0));
 	for (std::vector<int>::size_type i = 0; i < m_forces.size(); i++) {
-		total = total->AddForce(m_forces.at(i));
+		total.AddSelfForce(m_forces.at(i));
 	}
 	//Remove all applied forces so applied forces can change over time
 	m_forces.clear();
-	m_speed = m_speed + total->MultiplyByScalar(delta).GetDirection();
+	m_speed = m_speed + total.MultiplyByScalar(delta).GetDirection();
 	*m_position = *m_position + m_speed*delta;
+	return m_speed * delta;
 }
 
 std::vector<glm::vec3> PhysicObject::GetCornersPos()

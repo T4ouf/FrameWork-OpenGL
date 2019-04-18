@@ -19,6 +19,10 @@ Force* Force::AddForce(Force* other)
 }
 
 
+void Force::AddSelfForce(Force* other) {
+	m_direction += other->GetDirection();
+}
+
 Force Force::MultiplyByScalar(float k)
 {
 	glm::vec3 newDirection = m_direction * k;

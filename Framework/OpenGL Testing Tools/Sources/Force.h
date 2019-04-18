@@ -8,7 +8,9 @@ private:
 public:
 	Force(glm::vec3 direction);
 	~Force();
+
 	Force* AddForce(Force* other);
+	void AddSelfForce(Force* other);
 
 	glm::vec3 GetDirection() {
 		return m_direction;
