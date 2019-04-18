@@ -45,8 +45,8 @@ class Application {
 
 private:
 
-	std::unordered_map<ControllerButton, ButtonFunction> MapControllerButton;
-	std::unordered_map<ControllerAnalogButton, AnalogButtonFunction> MapControllerAnalogButton;
+	std::unordered_map<ControllerButton, ButtonFunction> m_mapControllerButton;
+	std::unordered_map<ControllerAnalogButton, AnalogButtonFunction> m_mapControllerAnalogButton;
 
 public:
 
