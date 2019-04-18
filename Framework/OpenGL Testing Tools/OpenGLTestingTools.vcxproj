@@ -19,16 +19,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\Camera.cpp" />
+    <ClCompile Include="Sources\Force.cpp" />
     <ClCompile Include="Sources\IndexBuffer.cpp" />
+    <ClCompile Include="Sources\Light.cpp" />
+    <ClCompile Include="Sources\Macros.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\Material.cpp" />
+    <ClCompile Include="Sources\Mesh.cpp" />
+    <ClCompile Include="Sources\MeshFactory.cpp" />
+    <ClCompile Include="Sources\Object.cpp" />
+    <ClCompile Include="Sources\ObjectFactory.cpp" />
+    <ClCompile Include="Sources\PhysicObject.cpp" />
+    <ClCompile Include="Sources\Positionable.cpp" />
     <ClCompile Include="Sources\Renderer.cpp" />
+    <ClCompile Include="Sources\Scene.cpp" />
     <ClCompile Include="Sources\Shader.cpp" />
     <ClCompile Include="Sources\Tests\MonTest.cpp" />
     <ClCompile Include="Sources\Tests\Test.cpp" />
     <ClCompile Include="Sources\Tests\Test3D.cpp" />
     <ClCompile Include="Sources\Tests\TestClearCouleur.cpp" />
     <ClCompile Include="Sources\Tests\TestIB3D.cpp" />
+    <ClCompile Include="Sources\Tests\TestImGui.cpp" />
     <ClCompile Include="Sources\Tests\TestLumiere.cpp" />
+    <ClCompile Include="Sources\Tests\TestMaterial.cpp" />
+    <ClCompile Include="Sources\Tests\TestMesh.cpp" />
+    <ClCompile Include="Sources\Tests\TestMovement.cpp" />
+    <ClCompile Include="Sources\Tests\TestPhysics.cpp" />
+    <ClCompile Include="Sources\Tests\TestScene.cpp" />
     <ClCompile Include="Sources\Tests\TestTexture2D.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\Vendor\glm\detail\glm.cpp" />
@@ -41,16 +59,34 @@
     <ClCompile Include="Sources\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Camera.h" />
+    <ClInclude Include="Sources\Force.h" />
     <ClInclude Include="Sources\IndexBuffer.h" />
+    <ClInclude Include="Sources\Light.h" />
+    <ClInclude Include="Sources\Macros.h" />
+    <ClInclude Include="Sources\Material.h" />
+    <ClInclude Include="Sources\Mesh.h" />
+    <ClInclude Include="Sources\MeshFactory.h" />
+    <ClInclude Include="Sources\Object.h" />
+    <ClInclude Include="Sources\ObjectFactory.h" />
+    <ClInclude Include="Sources\PhysicObject.h" />
+    <ClInclude Include="Sources\Positionable.h" />
     <ClInclude Include="Sources\Renderer.h" />
+    <ClInclude Include="Sources\Scene.h" />
     <ClInclude Include="Sources\Shader.h" />
     <ClInclude Include="Sources\Tests\MonTest.h" />
     <ClInclude Include="Sources\Tests\Test.h" />
     <ClInclude Include="Sources\Tests\Test3D.h" />
     <ClInclude Include="Sources\Tests\TestClearCouleur.h" />
     <ClInclude Include="Sources\Tests\TestIB3D.h" />
+    <ClInclude Include="Sources\Tests\TestImGui.h" />
     <ClInclude Include="Sources\Tests\TestLumiere.h" />
+    <ClInclude Include="Sources\Tests\TestMaterial.h" />
+    <ClInclude Include="Sources\Tests\TestMesh.h" />
+    <ClInclude Include="Sources\Tests\TestMovement.h" />
+    <ClInclude Include="Sources\Tests\TestPhysics.h" />
+    <ClInclude Include="Sources\Tests\TestScene.h" />
     <ClInclude Include="Sources\Tests\TestTexture2D.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\Vendor\glm\common.hpp" />
@@ -305,7 +341,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Ressources\Shaders\Basic.shader" />
+    <None Include="Ressources\Shaders\LightSource.shader" />
     <None Include="Ressources\Shaders\Lumiere.shader" />
+    <None Include="Ressources\Shaders\Material.shader" />
     <None Include="Ressources\Shaders\MonShader.shader" />
     <None Include="Ressources\Shaders\SourceLumiere.shader" />
     <None Include="Sources\Vendor\glm\detail\func_common.inl" />
@@ -504,11 +542,13 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>Sources;Sources/Vendor;$(SolutionDir)external\GLFW\include;$(SolutionDir)external\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)external\GLFW\lib-vc2015;$(SolutionDir)external\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -519,6 +559,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

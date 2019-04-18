@@ -1,0 +1,47 @@
+﻿  Cube.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\VertexBufferLayout.h(7): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  IndexBuffer.cpp
+  Macros.cpp
+  main.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Shader.h(8): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  Material.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Material.h(3): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  Mesh.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Mesh.h(3): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  MeshFactory.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Material.h(3): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  Object.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\VertexBufferLayout.h(7): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  Renderer.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Shader.h(8): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  Shader.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\Shader.h(8): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  MonTest.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\MonTest.h(8): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  Test.cpp
+Sources\Tests\Test.cpp(2): fatal error C1083: Impossible d'ouvrir le fichier include : 'imgui/imgui.h' : No such file or directory
+  Test3D.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\Test3D.h(7): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  TestClearCouleur.cpp
+Sources\Tests\TestClearCouleur.cpp(2): fatal error C1083: Impossible d'ouvrir le fichier include : 'Renderer.h' : No such file or directory
+  TestIB3D.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\TestIB3D.h(5): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  TestLumiere.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\TestLumiere.h(4): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  TestMaterial.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\TestMaterial.h(5): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  TestTexture2D.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\tests\TestTexture2D.h(4): fatal error C1083: Impossible d'ouvrir le fichier include : 'VertexBuffer.h' : No such file or directory
+  Texture.cpp
+Sources\Texture.cpp(3): fatal error C1083: Impossible d'ouvrir le fichier include : 'stb_image\stb_image.h' : No such file or directory
+  glm.cpp
+Sources\Vendor\glm\detail\glm.cpp(5): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/gtx/dual_quaternion.hpp' : No such file or directory
+  Compilation en cours...
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw_gl3.cpp
+  stb_image.cpp
+  VertexArray.cpp
+c:\users\admin\desktop\framework-opengl\framework\opengl testing tools\sources\VertexBufferLayout.h(7): fatal error C1083: Impossible d'ouvrir le fichier include : 'glm/glm.hpp' : No such file or directory
+  VertexBuffer.cpp

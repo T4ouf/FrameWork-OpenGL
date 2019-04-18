@@ -6,7 +6,7 @@ class IndexBuffer {
 private:
 	//Id du renderer (comme tout objet en OpenGL, le renderer a un ID)
 	unsigned int m_RendererID;
-	unsigned int m_Compte; //On Compte le nombre d'indices que stocke le IB
+	unsigned int m_Count; //On Compte le nombre d'indices que stocke le IB
 
 public:
 
@@ -22,6 +22,6 @@ public:
 	//délier notre IndexBuffer au renderer
 	void UnBind() const;
 
-	inline unsigned int getCompte() const { return m_Compte; }
+	inline unsigned int getCount() const { return m_Count; }
 
 };

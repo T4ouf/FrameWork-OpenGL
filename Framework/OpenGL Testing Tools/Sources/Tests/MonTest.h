@@ -4,8 +4,16 @@
 #include <memory>
 
 #include "Test.h"
+
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
+#include "VertexArray.h"
+#include "IndexBuffer.h"
+#include "Shader.h"
+#include "Texture.h"
+#include "Renderer.h"
+
+#include "Mesh.h"
 
 
 namespace test {
@@ -23,18 +31,14 @@ namespace test {
 
 	private:
 		
-		//pointeur unique sur notre VertexArray
-		std::unique_ptr<VertexArray> m_VAO;
+		//Création du shader
+		Shader* shader;
 
-		//pointeur unique sur notre VertexBuffer
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		
-		//pointeur unique sur notre IndexBuffer
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		//Material : Gold PRESQUE OK ! => manque texture
+		Material* Gold;
 
-		//pointeur unique sur notre Shader
-		std::unique_ptr<Shader> m_Shader;
-
+		Mesh* m_Quad;
+		Mesh* m_Cube;
 		//matrices de vue et de projection
 		glm::mat4 m_Proj, m_Vue;
 

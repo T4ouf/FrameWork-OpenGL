@@ -1,6 +1,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
-#include "Renderer.h"
+#include "Macros.h"
+
 
 VertexArray::VertexArray(){
 
@@ -45,7 +46,8 @@ void VertexArray::AddBuffer(const VertexBuffer & vb, const VertexBufferLayout & 
 				element.normalise, layout.GetStride(), (const void*)decalage));
 
 		decalage = element.compte * VertexBufferElement::GetSizeofType(element.type);
-	}
+
+		}
 
 	
 }

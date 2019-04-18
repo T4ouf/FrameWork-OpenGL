@@ -98,16 +98,16 @@ namespace test {
 		//Ici aucun partage des points 36 points (6 faces * 2 triangles * 3 points chaque).
 		float positions2[] = {
 			-50.0f, -50.0f, -50.0f,  0.0f, 0.0f,
-			50.0f, -50.0f, -50.0f,  1.0f, 0.0f,
-			50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
-			50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
+			 50.0f, -50.0f, -50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
+			 50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
 			-50.0f,  50.0f, -50.0f,  0.0f, 1.0f,
 			-50.0f, -50.0f, -50.0f,  0.0f, 0.0f,
 
 			-50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
-			50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
-			50.0f,  50.0f,  50.0f,  1.0f, 1.0f,
-			50.0f,  50.0f,  50.0f,  1.0f, 1.0f,
+			 50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 1.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 1.0f,
 			-50.0f,  50.0f,  50.0f,  0.0f, 1.0f,
 			-50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
 
@@ -118,24 +118,24 @@ namespace test {
 			-50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
 			-50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
 
-			50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
-			50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
-			50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
-			50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
-			50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
-			50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
+			 50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
+			 50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
+			 50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
 
 			-50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
-			50.0f, -50.0f, -50.0f,  1.0f, 1.0f,
-			50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
-			50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f, -50.0f, -50.0f,  1.0f, 1.0f,
+			 50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f, -50.0f,  50.0f,  1.0f, 0.0f,
 			-50.0f, -50.0f,  50.0f,  0.0f, 0.0f,
 			-50.0f, -50.0f, -50.0f,  0.0f, 1.0f,
 
 			-50.0f,  50.0f, -50.0f,  0.0f, 1.0f,
-			50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
-			50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
-			50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f, -50.0f,  1.0f, 1.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
+			 50.0f,  50.0f,  50.0f,  1.0f, 0.0f,
 			-50.0f,  50.0f,  50.0f,  0.0f, 0.0f,
 			-50.0f,  50.0f, -50.0f,  0.0f, 1.0f
 		};
@@ -234,7 +234,7 @@ namespace test {
 
 
 		//Ici notre renderer ne stocke rien => on peut se permettre de le créer à chaque frame
-		Renderer renderer;
+		Renderer* renderer = Renderer::getInstance();
 
 		m_Texture->Bind();
 
@@ -280,7 +280,7 @@ namespace test {
 				m_Shader->SetUniformMat4f("u_MVP", mvp);
 
 				//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-				renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+				renderer->Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 			}
 
 			

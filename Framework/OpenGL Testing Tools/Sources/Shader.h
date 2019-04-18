@@ -7,6 +7,13 @@
 
 #include "glm/glm.hpp"
 
+typedef enum {
+
+	LightSourceShader,
+	MaterialShader
+
+}ShaderName;
+
 //Strucuture pour que la fonction ParseShader puisse renvoyer 2 valeurs de retour
 struct ShaderSource {
 	std::string VertexSource;
@@ -55,4 +62,19 @@ public:
 	void SetUniform3f(const std::string& nom, float f0, float f1, float f2);
 	void SetUniform4f(const std::string& nom, float f0, float f1, float f2, float f3);
 	void SetUniformMat4f(const std::string& nom, const glm::mat4& matrice);
+};
+
+//Struct that maps one of our shader with an existing shader
+namespace ShaderMap {
+
+	//Anonymous namespace makes the map "invisible" from the outside
+	namespace {
+		
+		static bool firstIn = true;
+
+		std::unordered_map<ShaderName, Shader*> map;
+	}
+	
+	Shader* getShader(ShaderName shader);
+
 };

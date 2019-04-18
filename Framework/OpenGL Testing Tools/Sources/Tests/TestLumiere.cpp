@@ -63,16 +63,16 @@ namespace test {
 			//Coords puis UV puis Normales
 			float positions2[] = {
 				-50.0f, -50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
-				50.0f, -50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
-				50.0f,  50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
-				50.0f,  50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
+				 50.0f, -50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
+				 50.0f,  50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
+				 50.0f,  50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
 				-50.0f,  50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
 				-50.0f, -50.0f, -50.0f,  0.0f,  0.0f, -1.0f,
 
 				-50.0f, -50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
-				50.0f, -50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
-				50.0f,  50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
-				50.0f,  50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
+				 50.0f, -50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
+				 50.0f,  50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
+				 50.0f,  50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
 				-50.0f,  50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
 				-50.0f, -50.0f,  50.0f,  0.0f,  0.0f,  1.0f,
 
@@ -83,24 +83,24 @@ namespace test {
 				-50.0f, -50.0f,  50.0f, -1.0f,  0.0f,  0.0f,
 				-50.0f,  50.0f,  50.0f, -1.0f,  0.0f,  0.0f,
 
-				50.0f,  50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
-				50.0f,  50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
-				50.0f, -50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
-				50.0f, -50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
-				50.0f, -50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
-				50.0f,  50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f,  50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f,  50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f, -50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f, -50.0f, -50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f, -50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
+				 50.0f,  50.0f,  50.0f,  1.0f,  0.0f,  0.0f,
 
 				-50.0f, -50.0f, -50.0f,  0.0f, -1.0f,  0.0f,
-				50.0f, -50.0f, -50.0f,  0.0f, -1.0f,  0.0f,
-				50.0f, -50.0f,  50.0f,  0.0f, -1.0f,  0.0f,
-				50.0f, -50.0f,  50.0f,  0.0f, -1.0f,  0.0f,
+				 50.0f, -50.0f, -50.0f,  0.0f, -1.0f,  0.0f,
+				 50.0f, -50.0f,  50.0f,  0.0f, -1.0f,  0.0f,
+				 50.0f, -50.0f,  50.0f,  0.0f, -1.0f,  0.0f,
 				-50.0f, -50.0f,  50.0f,  0.0f, -1.0f,  0.0f,
 				-50.0f, -50.0f, -50.0f,  0.0f, -1.0f,  0.0f,
 
 				-50.0f,  50.0f, -50.0f,  0.0f,  1.0f,  0.0f,
-				50.0f,  50.0f, -50.0f,  0.0f,  1.0f,  0.0f,
-				50.0f,  50.0f,  50.0f,  0.0f,  1.0f,  0.0f,
-				50.0f,  50.0f,  50.0f,  0.0f,  1.0f,  0.0f,
+				 50.0f,  50.0f, -50.0f,  0.0f,  1.0f,  0.0f,
+				 50.0f,  50.0f,  50.0f,  0.0f,  1.0f,  0.0f,
+				 50.0f,  50.0f,  50.0f,  0.0f,  1.0f,  0.0f,
 				-50.0f,  50.0f,  50.0f,  0.0f,  1.0f,  0.0f,
 				-50.0f,  50.0f, -50.0f,  0.0f,  1.0f,  0.0f
 
@@ -285,7 +285,7 @@ namespace test {
 		processInput2(fen);
 		
 		//Ici notre renderer ne stocke rien => on peut se permettre de le créer à chaque frame
-		Renderer renderer;
+		Renderer* renderer = Renderer::getInstance();
 
 
 		glm::mat4 vue = camera2.GetViewMatrix();
@@ -306,7 +306,7 @@ namespace test {
 			m_Shader->SetUniform3f("u_ObjectColor", 0.3f, 0.7f, 1.0f);
 			m_Shader->SetUniform3f("u_LightColor", m_CouleurLumiere[0], m_CouleurLumiere[1], m_CouleurLumiere[2]);
 			m_Shader->SetUniform3f("u_LightPos", PositionLampe.x, PositionLampe.y, PositionLampe.z);
-			m_Shader->SetUniform3f("u_ViewPos", camera2.Position.x, camera2.Position.y, camera2.Position.z);
+			m_Shader->SetUniform3f("u_ViewPos", camera2.m_position.x, camera2.m_position.y, camera2.m_position.z);
 
 
 			//Definition d'une matrice du modèle => Considère toutes les transformations 
@@ -349,7 +349,7 @@ namespace test {
 				m_Shader->SetUniformMat4f("u_InverseModelMat", glm::inverse(modele));
 
 				//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-				renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+				renderer->Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 			}
 
 			m_Shader->UnBind();
@@ -388,7 +388,7 @@ namespace test {
 			m_LampShader->SetUniformMat4f("u_MVP", mvp);
 
 			//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-			renderer.Draw(*m_LampVAO, *m_LampIB, *m_LampShader);
+			renderer->Draw(*m_LampVAO, *m_LampIB, *m_LampShader);
 
 			m_LampShader->UnBind();
 			m_LampIB->UnBind();

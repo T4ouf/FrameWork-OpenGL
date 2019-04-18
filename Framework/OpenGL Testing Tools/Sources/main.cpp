@@ -23,7 +23,12 @@
 #include "Tests/TestIB3D.h"
 #include "Tests/TestLumiere.h"
 #include "Tests/MonTest.h"
-
+#include "Tests/TestMaterial.h"
+#include "Tests/TestImGui.h"
+#include "Tests/TestPhysics.h"
+#include "Tests/TestMovement.h"
+#include "Tests/TestMesh.h"
+#include "Tests/TestScene.h"
 using namespace std;
 
 
@@ -101,7 +106,7 @@ int main() {
 		glDepthFunc(GL_LESS);
 		
 
-		Renderer renderer;
+		Renderer* renderer = Renderer::getInstance();
 
 		// Prépare à l'utilisation de ImGui
 		ImGui::CreateContext();
@@ -128,8 +133,14 @@ int main() {
 		menuTest->AjouteTest<test::Test3D>("3D");
 		menuTest->AjouteTest<test::TestIB3D>("Cube IndexBuffer");
 		menuTest->AjouteTest<test::TestLumiere>("Lumiere et Illuminations");
-		
+		menuTest->AjouteTest<test::TestMaterial>("Materials");
+		menuTest->AjouteTest<test::TestImGui>("Interface");
+		menuTest->AjouteTest<testPhysics::TestPhysics>("Physique");
+		menuTest->AjouteTest<testMovement::TestMovement>("Mouvements");
+		menuTest->AjouteTest<test::TestMesh>("Mesh");
+		menuTest->AjouteTest<test::TestScene>("Scene");
 
+		
 		float r = 0.0f;
 		float g = 0.0f;
 		float b = 0.0f;
@@ -145,7 +156,7 @@ int main() {
 			GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 			//Avant le dessin on nettoie tout
-			renderer.Clear();
+			renderer->Clear();
 
 			//Petite animation colorée sur le menu principal
 			if (TestEnCours == menuTest) {

@@ -99,7 +99,7 @@ namespace test {
 
 
 		//Ici notre renderer ne stocke rien => on peut se permettre de le créer à chaque frame
-		Renderer renderer;
+		Renderer* renderer = Renderer::getInstance();
 
 		m_Texture->Bind();
 
@@ -126,7 +126,7 @@ namespace test {
 			m_Shader->SetUniformMat4f("u_MVP", mvp);
 
 			//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+			renderer->Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
 
 		//Dessin 2
@@ -152,7 +152,7 @@ namespace test {
 			m_Shader->SetUniformMat4f("u_MVP", mvp);
 
 			//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+			renderer->Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
 
 

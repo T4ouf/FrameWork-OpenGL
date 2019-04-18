@@ -1,7 +1,7 @@
 #include "IndexBuffer.h"
-#include "Renderer.h"
+#include "Macros.h"
 
-IndexBuffer::IndexBuffer(const unsigned int* donnees, unsigned int nombreIndice):m_Compte(nombreIndice){
+IndexBuffer::IndexBuffer(const unsigned int* donnees, unsigned int nombreIndice):m_Count(nombreIndice){
 
 	//Précaution supplémentaire (cf ligne glBufferData)
 	ASSERT(sizeof(unsigned int) == sizeof(GLuint));

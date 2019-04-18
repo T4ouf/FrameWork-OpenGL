@@ -4,6 +4,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "Mesh.h"
+#include "MeshFactory.h"
+#include "Object.h"
+
 /**
 * Constructeur de MonTest 
 * C'est ici que l'initialise tout ce dont notre application aura besoin
@@ -13,49 +17,24 @@ test::MonTest::MonTest():
 	m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
 	m_Vue(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))) {
 
-	//Tableau contenant les positions des points (4 pour un rectangle) 
-	float positions[] = {
-		100.0f, 100.0f,	//0
-		200.0f, 100.0f, //1
-		200.0f, 200.0f, //2
-		100.0f, 200.0f  //3
-	};
-
-	//Pour éviter la redondance (créer 2x ou plus le même point) on crée un IndiceBuffer (tab d'indice)
-	//qui va stocker les indices des points à tracer
-	unsigned int indices[] = {
-		0,1,2,
-		2,3,0
-	};
-
-	//On crée le VertexArray
-	m_VAO = std::make_unique<VertexArray>();
-
-	//On stocke nos données (les positions)
-	//										nb de pts * nombre de floats/pt * size(float)
-	m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 4 * 2 * sizeof(float));
-
-	//Définition de notre layout pour notre VertexArray
-	VertexBufferLayout layout;
-	//On utilse 2 floats par points (positions) => layout regroupe ce qui va ensemble
-	//layout location 0 (cf vertex shader)
-	layout.Push<float>(2);
-
-	//On regroupe tout dans notre vertex Array (on donne du sens à nos données)
-	m_VAO->AddBuffer(*m_VertexBuffer, layout);
-
-	//On stocke et lie à l'index buffer les indices
-	m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
-
 	//Création du shader
-	m_Shader = std::make_unique<Shader>("Ressources/Shaders/MonShader.shader");
+	shader = new Shader("Ressources/Shaders/Material.shader");
 
-	m_Shader->Bind();
+	//Material : Gold PRESQUE OK ! => manque texture
+	Gold = new Material(shader, nullptr,
+		glm::vec3(0.329412f, 0.223529f, 0.027451f),
+		glm::vec3(0.780392f, 0.568627f, 0.113725f),
+		glm::vec3(0.992157f, 0.941176f, 0.807843f), 27.8974f);
 
-	//Uniform --> envoi de données du CPU vers les shaders pour être utilisé comme une variable dans le shader
-	//Utilisation uniform après bind avec le shader qui utilise l'uniform
-	//Uniform appelé à chaque dessin (draw call)
-	m_Shader->SetUniform4f("u_Color", 0.0f, 0.0f, 1.0f, 1.0f);
+
+	m_Quad = MeshFactory::CreateQuad(0, 0, 50, 50, Gold);
+	m_Cube = MeshFactory::CreateCube(100, Gold);
+
+	/*TODO : A ENLEVER !*/
+	Object* o = new Object(nullptr, nullptr, glm::vec3(2.0f, 0.0f,0.0f));
+	o->translate(glm::vec3(10.0f,50.0f,25.0f));
+	o->translate(glm::vec3(10.0f, -50.0f, -25.0f));
+	o->scale(0.5f);
 }
 
 /**
@@ -85,29 +64,14 @@ void test::MonTest::OnRender(){
 	GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 	//Ici notre renderer ne stocke rien => on peut se permettre de le créer à chaque frame
-	Renderer renderer;
+	Renderer* renderer = Renderer::getInstance();
 
 	//Dessin 1
 	{
-		//Definition d'une matrice du modèle => Considère toutes les transformations 
-		//aka translation, rotation, scaling
-		//à appliquer à notre modèle...
-		//Ici on le déplace vers en haut à droite
-		glm::mat4 modele = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f));
+		m_Quad->Render(*renderer);
 
-		//Matrice finale (que l'on va multiplier par chaque point pour qu'il s'affiche correctement)
-		// /!\ ORDRE IMPORTANT ICI /!\ 
-		glm::mat4 mvp = m_Proj * m_Vue * modele;
-
-		//Seul moyen de ne pas gérer les uniform à la main => materials
-		//materials = shader + des donnees utiles au dessin
-		m_Shader->Bind();
-
-		//On envoit la matrice de projection au shader
-		m_Shader->SetUniformMat4f("u_MVP", mvp);
-
-		//en tant normal, un renderer prend un vertexArray + IndexBuffer + Materials (pas shader)
-		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+		m_Cube->Render(*renderer);
+		
 	}
 
 }

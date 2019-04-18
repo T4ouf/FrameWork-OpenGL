@@ -3,7 +3,8 @@
 #include <GL/glew.h>
 #include <vector>
 
-#include "Renderer.h"
+#include "Macros.h"
+#include "glm/glm.hpp"
 
 /**
 * Elements composant notre VBLayout (tout ce qu'il faut pour la fct VertexAttribPointer)
@@ -81,9 +82,27 @@ public:
 	void Push<unsigned char>(unsigned int compte) {
 
 		//on ajoute un element (VertexBufferElement)
-		m_Elements.push_back({ GL_UNSIGNED_BYTE, compte, GL_TRUE });
+		m_Elements.push_back({ GL_UNSIGNED_BYTE, compte, GL_TRUE});
 
 		m_Stride += VertexBufferElement::GetSizeofType(GL_UNSIGNED_BYTE) * compte;
+
+	}
+
+	//ici on ajoute la spécialisation pour les vec2
+	template<>
+	void Push<glm::vec2>(unsigned int compte) {
+
+		//on ajoute un element (VertexBufferElement) ici un vec2 (2 floats)
+		Push<float>(2*compte);
+
+	}
+
+	//ici on ajoute la spécialisation pour les vec3
+	template<>
+	void Push<glm::vec3>(unsigned int compte) {
+
+		//on ajoute un element (VertexBufferElement) ici un vec3 (3 floats)
+		Push<float>(3 * compte);
 
 	}
 

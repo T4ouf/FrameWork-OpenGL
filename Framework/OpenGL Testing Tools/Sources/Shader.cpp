@@ -7,7 +7,7 @@
 
 #include <GL/glew.h>
 
-#include "Renderer.h"
+#include "Macros.h"
 
 
 Shader::Shader(const std::string & chemin) : m_CheminFichier(chemin), m_RendererID(0){
@@ -194,3 +194,15 @@ void Shader::SetUniformMat4f(const std::string & nom, const glm::mat4& matrice) 
 	GLCALL(glUniformMatrix4fv(GetUniformLocation(nom),1,GL_FALSE, &matrice[0][0]));
 }
 
+Shader* ShaderMap::getShader(ShaderName shader){
+
+	if (firstIn) {
+		firstIn = false;
+		map = { 
+			{ LightSourceShader, new Shader("Ressources/Shaders/LightSource.shader") },
+			{ MaterialShader, new Shader("Ressources/Shaders/MaterialLumiere.shader")} 
+		};
+	}
+
+	return map.at(shader);
+}
