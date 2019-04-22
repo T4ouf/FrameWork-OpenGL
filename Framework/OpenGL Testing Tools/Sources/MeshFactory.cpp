@@ -235,15 +235,14 @@ Mesh * MeshFactory::CreateCube(float size, Material* material){
 
 Mesh * MeshFactory::CreateSphere(float radius, Material* material) {
 	/*			
-			CE QUE L'ON A TESTE CE MATIN A L'ECOLE
+			CE QUE L'ON A TESTE CE MATIN A L'ECOLE */
 
 	// array is 71 floats (24 * 3 = 71).
 	float deltaTheta, deltaPhi;
 
 	int nbSlices = 100;
 	int nbStacks = 100;
-
-
+	
 	// vertex, normal and texture coordinates
 	
 	float _radius = radius;
@@ -257,6 +256,8 @@ Mesh * MeshFactory::CreateSphere(float radius, Material* material) {
 
 	// angular distance between two longitudinal lines
 	deltaTheta = 2.0f * M_PI / nbStacks;
+
+	int k = 0;
 
 	// triangle strips made of vertical stacks
 	for (int i = 0; i < nbStacks; i++) {
@@ -274,7 +275,7 @@ Mesh * MeshFactory::CreateSphere(float radius, Material* material) {
 
 		// tesselating the triangle strip into nbSlices
 		// note <= instead of < for making sure that the last angke is used
-		for (int j = 0; j <= nbSlices; j=j+2) {
+		for (int j = 0; j <= nbSlices; j++) {
 			// polar angle
 			float phi = j * deltaPhi;
 
@@ -285,71 +286,72 @@ Mesh * MeshFactory::CreateSphere(float radius, Material* material) {
 			//INDICES A REVOIR
 
 			// vertex #1 (theta , phi)
-			data[i+(i*j)].position = glm::vec3(yPolar * x0 * radius, yPolar * y0 * radius, xPolar * radius); // per each ?
-			data[i+(i*j)].normal = glm::vec3(yPolar * x0, yPolar*y0, xPolar);
-			data[i+(i*j)].uv = glm::vec2((float)i / (float)100, (float)j / (float)100);
+			data[k].position = glm::vec3(yPolar * x0 * radius, yPolar * y0 * radius, xPolar * radius); // per each ?
+			data[k].normal = glm::vec3(yPolar * x0, yPolar*y0, xPolar);
+			data[k].uv = glm::vec2((float)i / (float)nbStacks, (float)j / (float)nbSlices);
 
 			// vertex #2 (theta , phiPrime)
-			data[i + (i*j)+1].position = glm::vec3(yPolar * x1 * radius, yPolar * y1 * radius, xPolar * radius); // per each ?
-			data[i + (i*j)+1].normal = glm::vec3(yPolar * x1, yPolar*y1, xPolar);
-			data[i + (i*j)+1].uv = glm::vec2((float)(i + 1) / (float)100, (float)j / (float)100);
+			data[k+1].position = glm::vec3(yPolar * x1 * radius, yPolar * y1 * radius, xPolar * radius); // per each ?
+			data[k+1].normal = glm::vec3(yPolar * x1, yPolar*y1, xPolar);
+			data[k+1].uv = glm::vec2((float)(i + 1) / (float)nbStacks, (float)j / (float)nbSlices);
+			
+			k+=2;
 		}
 	}
-	*/
 
 
 	/* TEST D'UNE 2e METHODE  https://gamedev.stackexchange.com/questions/150191/opengl-calculate-uv-sphere-vertices*/
 
-	// One vertex at every latitude-longitude intersection,
-	// plus one for the north pole and one for the south.
-	// One meridian serves as a UV seam, so we double the vertices there.
+	//// One vertex at every latitude-longitude intersection,
+	//// plus one for the north pole and one for the south.
+	//// One meridian serves as a UV seam, so we double the vertices there.
 
-	const int numLatitudeLines = 100;
-	const int numLongitudeLines = 100;
-	const int numVertices = numLatitudeLines * (numLongitudeLines + 1) + 2;
+	//const int numLatitudeLines = 100;
+	//const int numLongitudeLines = 100;
+	//const int numVertices = numLatitudeLines * (numLongitudeLines + 1) + 2;
 
-	Vertex data[numVertices];
+	//Vertex data[numVertices];
 
-	// North pole.
-	data[0].position = glm::vec3(0, radius, 0);
-	data[0].uv = glm::vec2(0, 1);
+	//// North pole.
+	//data[0].position = glm::vec3(0, radius, 0);
+	//data[0].uv = glm::vec2(0, 1);
 
-	// South pole.
-	data[numVertices - 1].position =glm::vec3(0, -radius, 0);
-	data[numVertices - 1].uv  = glm::vec2(0, 0);
+	//// South pole.
+	//data[numVertices - 1].position =glm::vec3(0, -radius, 0);
+	//data[numVertices - 1].uv  = glm::vec2(0, 0);
 
-	// +1.0f because there's a gap between the poles and the first parallel.
-	float latitudeSpacing = 1.0f / (numLatitudeLines + 1.0f);
-	float longitudeSpacing = 1.0f / (numLongitudeLines);
+	//// +1.0f because there's a gap between the poles and the first parallel.
+	//float latitudeSpacing = 1.0f / (numLatitudeLines + 1.0f);
+	//float longitudeSpacing = 1.0f / (numLongitudeLines);
 
-	// start writing new vertices at position 1
-	int v = 1;
-	for (int latitude = 0; latitude < numLatitudeLines; latitude++) {
-		for (int longitude = 0; longitude <= numLongitudeLines; longitude++) {
+	//// start writing new vertices at position 1
+	//int v = 1;
+	//for (int latitude = 0; latitude < numLatitudeLines; latitude++) {
+	//	for (int longitude = 0; longitude <= numLongitudeLines; longitude++) {
 
-			// Scale coordinates into the 0...1 texture coordinate range,
-			// with north at the top (y = 1).
-			data[v].uv = glm::vec2(longitude * longitudeSpacing, 1.0f - (latitude + 1) * latitudeSpacing);
+	//		// Scale coordinates into the 0...1 texture coordinate range,
+	//		// with north at the top (y = 1).
+	//		data[v].uv = glm::vec2(longitude * longitudeSpacing, 1.0f - (latitude + 1) * latitudeSpacing);
 
-			// Convert to spherical coordinates:
-			// theta is a longitude angle (around the equator) in radians.
-			// phi is a latitude angle (north or south of the equator).
-			float theta = data[v].uv.x * 2.0f * M_PI;
-			float phi = (data[v].uv.y - 0.5f) * M_PI;
+	//		// Convert to spherical coordinates:
+	//		// theta is a longitude angle (around the equator) in radians.
+	//		// phi is a latitude angle (north or south of the equator).
+	//		float theta = data[v].uv.x * 2.0f * M_PI;
+	//		float phi = (data[v].uv.y - 0.5f) * M_PI;
 
-			// This determines the radius of the ring of this line of latitude.
-			// It's widest at the equator, and narrows as phi increases/decreases.
-			float c = cos(phi);
+	//		// This determines the radius of the ring of this line of latitude.
+	//		// It's widest at the equator, and narrows as phi increases/decreases.
+	//		float c = cos(phi);
 
-			// Usual formula for a vector in spherical coordinates.
-			// You can exchange x & z to wind the opposite way around the sphere.
-			data[v].position = glm::vec3(c * cos(theta), sin(phi), c * sin(theta)) * radius;
-			data[v].normal = glm::vec3(sin(phi) * cos(theta), sin(phi)*sin(theta), cos(phi));
+	//		// Usual formula for a vector in spherical coordinates.
+	//		// You can exchange x & z to wind the opposite way around the sphere.
+	//		data[v].position = glm::vec3(c * cos(theta), sin(phi), c * sin(theta)) * radius;
+	//		data[v].normal = glm::vec3(sin(phi) * cos(theta), sin(phi)*sin(theta), cos(phi));
 
-			// Proceed to the next vertex.
-			v++;
-		}
-	}
+	//		// Proceed to the next vertex.
+	//		v++;
+	//	}
+	//}
 
 
 	VertexBuffer* vb = new VertexBuffer(data, 100*100 * sizeof(Vertex));

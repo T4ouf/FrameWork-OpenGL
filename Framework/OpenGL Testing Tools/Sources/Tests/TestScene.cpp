@@ -89,7 +89,7 @@ namespace test {
 		Light& l = m_scene->retrieveLight();
 		l.setPosition(150.0f, 150.0f, -175.0f);
 
-		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,true,LampMaterial); //NE MARCHE PAS ENCORE...
+		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial); //NE MARCHE PAS ENCORE...
 
 		Camera& camera = m_scene->retrieveCamera();
 		//camera.lookAt(*Cube);
