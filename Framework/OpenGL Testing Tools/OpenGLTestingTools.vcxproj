@@ -56,6 +56,7 @@
     <ClCompile Include="Sources\Vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="Sources\VertexArray.cpp" />
     <ClCompile Include="Sources\VertexBuffer.cpp" />
+    <ClCompile Include="Sources\Tests\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Application.h" />
@@ -335,6 +336,7 @@
     <ClInclude Include="Sources\VertexBuffer.h" />
     <ClInclude Include="Sources\VertexArray.h" />
     <ClInclude Include="Sources\VertexBufferLayout.h" />
+    <ClInclude Include="Sources\Tests\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Ressources\Shaders\Basic.shader" />
