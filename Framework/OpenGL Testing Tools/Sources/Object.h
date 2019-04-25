@@ -15,6 +15,8 @@ private:
 	
 	void updatePos(glm::mat4 ModelMatrix);
 
+	std::vector<Force*> m_tmpForces;
+
 	friend class Scene;
 
 	
@@ -25,8 +27,10 @@ public:
 	
 	bool isAnchor();
 
+	void addForce(Force* f);
+
 	//Object transformation
-	void translate(glm::vec3 translation);
+	void translate(glm::vec3 translation) override;
 	void scale(float factor);
 	void scale(float xfactor, float yfactor, float zfactor);
 	//void rotate(glm::vec3 axis, float DegreeAngle)
