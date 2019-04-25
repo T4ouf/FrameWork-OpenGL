@@ -9,7 +9,6 @@ Object* ObjectFactory::CreateCube(glm::vec3 position, float size, float mass, bo
 	Mesh* graphics = MeshFactory::CreateCube(size, material);
 	PhysicObject* physic = new PhysicObject(&position, size, size, size, mass, isAnchor);
 
-
 	return new Object(graphics, physic, position);
 }
 

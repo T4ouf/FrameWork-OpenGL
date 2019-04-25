@@ -45,8 +45,6 @@
     <ClCompile Include="Sources\Tests\TestLumiere.cpp" />
     <ClCompile Include="Sources\Tests\TestMaterial.cpp" />
     <ClCompile Include="Sources\Tests\TestMesh.cpp" />
-    <ClCompile Include="Sources\Tests\TestMovement.cpp" />
-    <ClCompile Include="Sources\Tests\TestPhysics.cpp" />
     <ClCompile Include="Sources\Tests\TestScene.cpp" />
     <ClCompile Include="Sources\Tests\TestTexture2D.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
@@ -85,8 +83,6 @@
     <ClInclude Include="Sources\Tests\TestLumiere.h" />
     <ClInclude Include="Sources\Tests\TestMaterial.h" />
     <ClInclude Include="Sources\Tests\TestMesh.h" />
-    <ClInclude Include="Sources\Tests\TestMovement.h" />
-    <ClInclude Include="Sources\Tests\TestPhysics.h" />
     <ClInclude Include="Sources\Tests\TestScene.h" />
     <ClInclude Include="Sources\Tests\TestTexture2D.h" />
     <ClInclude Include="Sources\Texture.h" />

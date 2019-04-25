@@ -34,7 +34,7 @@ bool Object::isAnchor()
 
 void Object::translate(glm::vec3 translation){
 
-	m_modelMatrix = glm::translate(glm::mat4(1.0f),translation);
+	m_modelMatrix = glm::translate(m_modelMatrix,translation);
 	//std::cout << glm::to_string(m_modelMatrix * glm::vec4(m_position,1.0f)) << "\n\n";
 	updatePos(m_modelMatrix);
 }
@@ -44,7 +44,7 @@ void Object::scale(float factor){
 	m_modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(factor, factor, factor));
 	m_physicObject->Scale(factor, factor, factor);
 
-	std::cout << glm::to_string(glm::vec4(m_position,1.0f)) << "\n\n";
+	//std::cout << glm::to_string(glm::vec4(m_position,1.0f)) << "\n\n";
 	// POSITION IS CHANGING ????? UPDATE OR NOT ?
 	//updatePos(m_modelMatrix);
 
@@ -87,14 +87,14 @@ void Object::UpdatePhysic(const std::vector<Force*>& OutsideForces, double delta
 	}
 
 	//Update the object's physic
-	glm::vec3 deltaPos = m_physicObject->Update(deltaTime);
-	m_modelMatrix = glm::translate(glm::mat4(1.0f), deltaPos);
+	glm::vec3 deltaPos = m_physicObject->Update(deltaTime, m_position);
+	m_modelMatrix = glm::translate(m_modelMatrix, deltaPos);
 
 }
 
 void Object::setPosition(float x, float y, float z){
 
-	m_modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x-m_position.x,y-m_position.y,z-m_position.z));
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x,y,z));
 	Positionable::setPosition(x, y, z);
 	//Adapt the Model Matrix
 
@@ -102,7 +102,7 @@ void Object::setPosition(float x, float y, float z){
 
 void Object::setPosition(glm::vec3 pos){
 
-	m_modelMatrix = glm::translate(glm::mat4(1.0f), pos-m_position);
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 	Positionable::setPosition(pos);
 	//Adapt the Model Matrix
 

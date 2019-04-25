@@ -87,9 +87,11 @@ namespace test {
 		//Boxe->scale(1.0f, 0.33f, 1.0f);	//SERA FAIT DANS LE CREATE BOX
 
 		Light& l = m_scene->retrieveLight();
-		l.setPosition(150.0f, 150.0f, -175.0f);
+		//l.setPosition(150.0f, 150.0f, -175.0f);
+		l.setPosition(0, 175, 0);
 
-		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial); //NE MARCHE PAS ENCORE...
+		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial); 
+		//Lamp->translate(glm::vec3(150.0f, 150.0f, -175.0f));
 
 		Camera& camera = m_scene->retrieveCamera();
 		//camera.lookAt(*Cube);
@@ -141,9 +143,9 @@ namespace test {
 		c.translate(m_translation);
 		m_scene->setLightColor(glm::vec3(m_CouleurLumiere[0], m_CouleurLumiere[1], m_CouleurLumiere[2]));
 
-		if (frameNumber % 4 == 0) {
-			//m_scene->UpdatePhysic(deltaTime);		//BUG PHYSICS
-		}
+		//if (frameNumber % 4 == 0) { //ralentissement fort de l'animation
+		m_scene->UpdatePhysic(deltaTime);		//BUG PHYSICS COLLISION
+		//}
 
 		m_scene->Render(Renderer::getInstance());
 
@@ -165,7 +167,7 @@ namespace test {
 
 			auto lPos = m_scene->retrieveLight().getPosition();
 
-			m_scene->retrieveCamera().lookAt(lPos.x,lPos.y,lPos.z);
+			m_scene->retrieveCamera().lookAt(lPos.x,lPos.y,lPos.z+400);
 		}
 		else if (ImGui::Button("Gravite++")) {
 			m_scene->addGlobalForce(m_gravite); //A VERIFIER SI CE N'EST PAS AJOUTE PLUSIEURS FOIS..
