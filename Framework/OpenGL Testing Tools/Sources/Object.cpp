@@ -11,6 +11,9 @@ Object::Object(Mesh * graphics, PhysicObject * physic, glm::vec3 position):Posit
 
 	m_modelMatrix = glm::identity<glm::mat4>();
 	m_modelMatrix = glm::translate(glm::mat4(1.0f), position);
+
+	//std::cout << glm::to_string(m_modelMatrix) << "\n\n";
+
 }
 
 Object::~Object(){
@@ -84,7 +87,9 @@ void Object::UpdatePhysic(const std::vector<Force*>& OutsideForces, double delta
 	}
 
 	//Update the object's physic
-	m_physicObject->Update(deltaTime);
+	glm::vec3 deltaPos = m_physicObject->Update(deltaTime);
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), deltaPos);
+
 }
 
 void Object::setPosition(float x, float y, float z){

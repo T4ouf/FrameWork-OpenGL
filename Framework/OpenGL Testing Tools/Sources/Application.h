@@ -39,16 +39,19 @@ typedef enum {
 typedef void(*ButtonFunction)(void);
 
 //Defining the Analog Button function pointer type
-typedef void(*AnalogButtonFunction)(double);	//Must have a param that is the analogic value of the button
+typedef void(*AnalogButtonFunction)(float);	//Must have a param that is the analogic value of the button
 
 class Application {
 
 private:
 
-	std::unordered_map<ControllerButton, ButtonFunction> MapControllerButton;
-	std::unordered_map<ControllerAnalogButton, AnalogButtonFunction> MapControllerAnalogButton;
+	std::unordered_map<ControllerButton, ButtonFunction> m_mapControllerButton;
+	std::unordered_map<ControllerAnalogButton, AnalogButtonFunction> m_mapControllerAnalogButton;
 
 public:
+
+	Application();
+	virtual ~Application();	//will be inherited => destructor must be virtual
 
 	//Adding a correspondance between a button and a function (adding to the map)
 	void mapButtonInput(ControllerButton b, ButtonFunction f);
@@ -57,7 +60,7 @@ public:
 	//Utile ? void removeButton(ControllerButton b);
 	//void removeAnalogButton(ControllerAnalogButton b);
 	
-	//Function that process all the input that are in the map
+	//Function that process all the input that are in the maps
 	void processInput();
 
 };

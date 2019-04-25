@@ -13,6 +13,7 @@ private:
 	double m_width, m_height, m_length, m_mass;//x, y and z axis dimension of the axis aligned bounding box
 	bool m_isAnchor;
 	std::vector<Force*> m_forces;
+	int m_counter;
 
 	void CenterToCorner();
 	void CornerToCenter();

@@ -37,6 +37,11 @@ void PhysicObject::ApplyForce(Force* f)
 }
 
 glm::vec3 PhysicObject::Update(float delta){
+	m_counter++;
+	if (m_counter > 60) {
+		m_counter = 0;
+		std::cout << "Position : " << glm::to_string(*m_position) << std::endl;
+	}
 	if (this->m_isAnchor) {
 		this->m_speed = glm::vec3(0.0f, 0.0f, 0.0f);
 		return this->m_speed;
@@ -63,8 +68,9 @@ std::vector<glm::vec3> PhysicObject::GetCornersPos()
 
 bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide){
 
+	std::cout << "Position center : " << glm::to_string(*m_position) << std::endl;
 	CenterToCorner();
-
+	std::cout << "Position corner : " << glm::to_string(*m_position) << std::endl;
 	//These are the coordinates for each sides
 	float thisLeft = this->m_position->x, thatRight = that->m_position->x + that->m_width, thisRight = this->m_position->x + this->m_width, thatLeft = that->m_position->x;
 	float thisTop = this->m_position->y, thatBot = that->m_position->y + that->m_height, thisBot = this->m_position->y + this->m_height, thatTop = that->m_position->y;

@@ -3,7 +3,7 @@
 
 Scene::Scene(const Camera& camera , const Light& light) : 
 	m_camera(camera), m_light(light), 
-	m_projectionMatrix(glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 1.0f, 2000.0f)){
+	m_projectionMatrix(glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 1.0f, 5000.0f)){
 
 }
 
@@ -72,12 +72,12 @@ void Scene::Render(Renderer* renderer){
 		Shader* s = o->m_graphicObject->GetMaterial()->getShader();
 
 		s->Bind(); //binding the shader
+		//Setting up the camera
+		s->SetUniformMat4f("u_ProjectionMat", m_projectionMatrix);
+		s->SetUniformMat4f("u_ViewMat", m_camera.GetViewMatrix());
 
 		//Material shader
 		if (o->m_graphicObject->GetMaterial()->getShaderName() == MaterialShader) {
-			//Setting up the camera
-			s->SetUniformMat4f("u_ProjectionMat", m_projectionMatrix);
-			s->SetUniformMat4f("u_ViewMat", m_camera.GetViewMatrix());
 
 			//Seting up the light
 			s->SetUniform3f("u_LightPos", m_light.getPosition().x, m_light.getPosition().y, m_light.getPosition().z);
@@ -111,7 +111,7 @@ void Scene::UpdatePhysic(double deltaTime){
 		Object* o1 = m_sceneObjects.at(i);
 		bool ObjectAnchor = m_sceneObjects.at(i)->isAnchor();
 
-		for (size_t j = i; j < m_sceneObjects.size(); j++) {
+		for (size_t j = i+1; j < m_sceneObjects.size(); j++) {
 
 			Object* o2 = m_sceneObjects.at(j);
 

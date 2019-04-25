@@ -19,7 +19,7 @@ namespace test {
 		lastFrame = 0.0;
 		frameNumber = 0;
 
-		m_gravite = new Force(glm::vec3(0.0f,-9.81,0.0f));
+		m_gravite = new Force(glm::vec3(0.0f,-0.0981,0.0f));
 
 		//On autorise et paramètre la transparence
 		GLCALL(glEnable(GL_BLEND));
@@ -82,20 +82,18 @@ namespace test {
 
 		m_scene = new Scene();
 
-		// GROS BUG !!! LA MODELE MATRIX N'EST PAS UPDATE LORS D'UN CHANGEMENT DE COORDS PHYSIQUE
-
-		Object* Cube = ObjectFactory::CreateCube(glm::vec3(0.0f, 200.0f, 0.0f), 50, 150, false, m_Material);
-		Object* Boxe = ObjectFactory::CreateCube(glm::vec3(0.0f, 125.0f, 0.0f), 150, 150, true, Ruby);
-		Boxe->scale(1.0f, 0.33f, 1.0f);	//SERA FAIT DANS LE CREATE BOX
+		Object* Cube = ObjectFactory::CreateCube(glm::vec3(0.0f, 200.0f, -150.0f), 50, 150, false, m_Material);
+		Object* Boxe = ObjectFactory::CreateBoxe(glm::vec3(0.0f, 125.0f, -150.0f), 150, 50, 150, 150, true, Ruby);
+		//Boxe->scale(1.0f, 0.33f, 1.0f);	//SERA FAIT DANS LE CREATE BOX
 
 		Light& l = m_scene->retrieveLight();
-		l.setPosition(0.0f, 300.0f, 0.0f);
+		l.setPosition(150.0f, 150.0f, -175.0f);
 
-		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),50,1,true,LampMaterial); //NE MARCHE PAS ENCORE...
+		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial); //NE MARCHE PAS ENCORE...
 
 		Camera& camera = m_scene->retrieveCamera();
 		//camera.lookAt(*Cube);
-		camera.translate(0.0f, 130.0f, 400.0f);
+		camera.translate(0.0f, 150.0f, 400.0f);
 		m_scene->addObject(Cube);
 		m_scene->addObject(Boxe);
 		m_scene->addObject(Lamp);
@@ -144,7 +142,7 @@ namespace test {
 		m_scene->setLightColor(glm::vec3(m_CouleurLumiere[0], m_CouleurLumiere[1], m_CouleurLumiere[2]));
 
 		if (frameNumber % 4 == 0) {
-			m_scene->UpdatePhysic(deltaTime);
+			//m_scene->UpdatePhysic(deltaTime);		//BUG PHYSICS
 		}
 
 		m_scene->Render(Renderer::getInstance());
@@ -162,6 +160,12 @@ namespace test {
 
 		if (ImGui::Button("Reset Camera Translation")) {
 			m_translation = glm::vec3(0.0f);
+		}
+		else if (ImGui::Button("Find light")) {
+
+			auto lPos = m_scene->retrieveLight().getPosition();
+
+			m_scene->retrieveCamera().lookAt(lPos.x,lPos.y,lPos.z);
 		}
 		else if (ImGui::Button("Gravite++")) {
 			m_scene->addGlobalForce(m_gravite); //A VERIFIER SI CE N'EST PAS AJOUTE PLUSIEURS FOIS..
