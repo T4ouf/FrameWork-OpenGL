@@ -12,7 +12,7 @@
 struct VertexBufferElement {
 	
 	unsigned int type; //type de l'élément (unsigned int car type enum OpenGL)
-	unsigned int compte; //Le nombre d'élement du type
+	unsigned int count; //Le nombre d'élement du type
 	
 	unsigned char normalise;	//Booléen qui spécifie si le VertexBufferElement est normalisé
 

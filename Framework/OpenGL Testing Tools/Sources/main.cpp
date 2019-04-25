@@ -30,8 +30,10 @@
 #include "Tests/TestGame.h"
 #include "Tests/TestMesh.h"
 #include "Tests/TestScene.h"
-using namespace std;
 
+#include "Application.h"
+
+using namespace std;
 
 int main() {
 

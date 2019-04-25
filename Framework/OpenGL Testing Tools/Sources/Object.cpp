@@ -6,6 +6,8 @@
 
 Object::Object(Mesh * graphics, PhysicObject * physic, glm::vec3 position):Positionable(position){
 
+	m_tmpForces = std::vector<Force*>();
+
 	m_graphicObject = graphics;
 	m_physicObject = physic;
 
@@ -32,9 +34,16 @@ bool Object::isAnchor()
 	return m_physicObject->IsAnchor();
 }
 
+void Object::addForce(Force * f){
+	m_tmpForces.push_back(f);
+	m_physicObject->ApplyForce(f);
+}
+
 void Object::translate(glm::vec3 translation){
 
 	m_modelMatrix = glm::translate(m_modelMatrix,translation);
+	//Positionable::translate(translation);
+	
 	//std::cout << glm::to_string(m_modelMatrix * glm::vec4(m_position,1.0f)) << "\n\n";
 	updatePos(m_modelMatrix);
 }
@@ -77,6 +86,8 @@ void Object::Render(Renderer& renderer){
 
 	m_graphicObject->Render(renderer);
 
+	//reset modelMatrix
+	m_modelMatrix = glm::translate(glm::mat4(1.0f), m_position);
 }
 
 void Object::UpdatePhysic(const std::vector<Force*>& OutsideForces, double deltaTime){
@@ -88,6 +99,13 @@ void Object::UpdatePhysic(const std::vector<Force*>& OutsideForces, double delta
 
 	//Update the object's physic
 	glm::vec3 deltaPos = m_physicObject->Update(deltaTime, m_position);
+
+	//clear the temp forces
+	for (auto f:m_tmpForces) {
+		delete f;
+	}
+	m_tmpForces.clear();
+
 	m_modelMatrix = glm::translate(m_modelMatrix, deltaPos);
 
 }

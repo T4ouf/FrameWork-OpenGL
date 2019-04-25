@@ -42,10 +42,10 @@ void VertexArray::AddBuffer(const VertexBuffer & vb, const VertexBufferLayout & 
 
 		//Définition du Layout du buffer
 		GLCALL(glEnableVertexAttribArray(i));
-		GLCALL(glVertexAttribPointer(i, element.compte, element.type,
+		GLCALL(glVertexAttribPointer(i, element.count, element.type,
 				element.normalise, layout.GetStride(), (const void*)decalage));
 
-		decalage = element.compte * VertexBufferElement::GetSizeofType(element.type);
+		decalage = element.count * VertexBufferElement::GetSizeofType(element.type);
 
 		}
 
