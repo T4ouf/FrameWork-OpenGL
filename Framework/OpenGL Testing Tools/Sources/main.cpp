@@ -25,8 +25,8 @@
 #include "Tests/MonTest.h"
 #include "Tests/TestMaterial.h"
 #include "Tests/TestImGui.h"
-#include "Tests/TestPhysics.h"
-#include "Tests/TestMovement.h"
+//#include "Tests/TestPhysics.h"
+//#include "Tests/TestMovement.h"
 #include "Tests/TestMesh.h"
 #include "Tests/TestScene.h"
 using namespace std;
@@ -92,6 +92,7 @@ int main() {
 
 	}
 
+
 	cout << "Version de OpenGL : " << glGetString(GL_VERSION) << endl;
 
 	{
@@ -135,8 +136,8 @@ int main() {
 		menuTest->AjouteTest<test::TestLumiere>("Lumiere et Illuminations");
 		menuTest->AjouteTest<test::TestMaterial>("Materials");
 		menuTest->AjouteTest<test::TestImGui>("Interface");
-		menuTest->AjouteTest<testPhysics::TestPhysics>("Physique");
-		menuTest->AjouteTest<testMovement::TestMovement>("Mouvements");
+		//menuTest->AjouteTest<testPhysics::TestPhysics>("Physique");
+		//menuTest->AjouteTest<testMovement::TestMovement>("Mouvements");
 		menuTest->AjouteTest<test::TestMesh>("Mesh");
 		menuTest->AjouteTest<test::TestScene>("Scene");
 

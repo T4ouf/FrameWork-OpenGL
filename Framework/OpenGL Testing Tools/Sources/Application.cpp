@@ -59,7 +59,7 @@ void Application::processInput(){
 
 	if (buttons == NULL || axes == NULL) {
 		//no Joystick plugged
-
+		//Error Message ?
 		return;
 	}
 

@@ -17,7 +17,7 @@ public:
 	Positionable(glm::vec3 pos);
 
 	const glm::vec3& getPosition() const { return m_position; }
-
+	
 	virtual void setPosition(float x, float y, float z) ;
 	virtual void setPosition(glm::vec3 pos);
 

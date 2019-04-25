@@ -83,7 +83,7 @@ void Camera::lookAt(float x, float y) {
 void Camera::lookAt(const Object& o) {
 
 	const glm::vec3& pos = o.getPosition();
-	lookAt(pos.x, pos.y, pos.z);
+	lookAt(pos.x, pos.y, pos.z + 400);
 
 }
 

@@ -124,9 +124,9 @@ void Scene::UpdatePhysic(double deltaTime){
 					Sides collisionSide;
 
 					//if collision :
-					if (o2->m_physicObject->CollidesWith(o1->m_physicObject, &collisionSide)) {
+					if (o2->m_physicObject->CollidesWith(o1->m_physicObject, &collisionSide,o2->m_position, o1->m_position)) {
 						//then we compute the collision (reverse)
-						o2->m_physicObject->OnCollision(o1->m_physicObject, &collisionSide);
+						o2->m_physicObject->OnCollision(o1->m_physicObject, &collisionSide, o2->m_position, o1->m_position);
 					}
 				}
 			}
@@ -136,9 +136,9 @@ void Scene::UpdatePhysic(double deltaTime){
 				Sides collisionSide;
 
 				//if collision :
-				if (o1->m_physicObject->CollidesWith(o2->m_physicObject, &collisionSide)) {
+				if (o1->m_physicObject->CollidesWith(o2->m_physicObject, &collisionSide, o1->m_position, o2->m_position)) {
 					//then we compute the collision
-					o1->m_physicObject->OnCollision(o2->m_physicObject, &collisionSide);
+					o1->m_physicObject->OnCollision(o2->m_physicObject, &collisionSide, o1->m_position, o2->m_position);
 				}	
 			}
 		}
