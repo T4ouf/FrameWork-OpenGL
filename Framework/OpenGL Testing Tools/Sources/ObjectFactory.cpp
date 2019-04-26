@@ -14,12 +14,9 @@ Object* ObjectFactory::CreateCube(glm::vec3 position, float size, float mass, bo
 
 Object * ObjectFactory::CreateBoxe(glm::vec3 position, float xSize, float ySize, float zSize, float mass, bool isAnchor, Material* material){
 
-	float yRatio = ySize / xSize;
-	float zRatio = zSize / xSize;
+	Mesh* graphics = MeshFactory::CreateBoxe(xSize,ySize,zSize, material);
+	PhysicObject* physic = new PhysicObject(&position, xSize, ySize, zSize, mass, isAnchor);
 
-	Object* cube = CreateCube(position, xSize, mass, isAnchor, material);
-	cube->scale(1.0f, yRatio, zRatio);
+	return new Object(graphics, physic, position);
 
-	return cube;
-	
 }

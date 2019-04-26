@@ -29,6 +29,7 @@
 //#include "Tests/TestMovement.h"
 #include "Tests/TestMesh.h"
 #include "Tests/TestScene.h"
+#include "Tests/TestGame.h"
 
 #include "Application.h"
 
@@ -142,6 +143,7 @@ int main() {
 		//menuTest->AjouteTest<testMovement::TestMovement>("Mouvements");
 		menuTest->AjouteTest<test::TestMesh>("Mesh");
 		menuTest->AjouteTest<test::TestScene>("Scene");
+		menuTest->AjouteTest<testGame::TestGame>("Jeu");
 
 		
 		float r = 0.0f;

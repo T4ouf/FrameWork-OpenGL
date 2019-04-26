@@ -102,6 +102,7 @@ void Camera::translate(glm::vec3 translation){
 
 }
 
+
 void Camera::updateCameraVectors(){
 
 	// Calculate the new Front vector

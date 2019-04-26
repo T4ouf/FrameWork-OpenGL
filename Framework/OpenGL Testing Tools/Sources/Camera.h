@@ -85,6 +85,7 @@ public:
 	//translate the camera (MUST MOVE TO POSITIONABLE)
 	void translate(float x, float y, float z);
 	void translate(glm::vec3 translation);
+
 };
 
 
