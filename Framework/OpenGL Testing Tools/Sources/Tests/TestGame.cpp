@@ -19,6 +19,9 @@
 
 namespace testGame {
 
+
+	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -0.01f));
+	Force* leftForce = new Force(glm::vec3(-0.01f, 0.0f, 0.0f));
 	
 
 
@@ -177,7 +180,7 @@ namespace testGame {
 		//Lamp->translate(glm::vec3(150.0f, 150.0f, -175.0f));
 
 		Camera& camera = m_scene->retrieveCamera();
-		camera.m_position = glm::vec3(0.0f, 200.0f, 650.0f);
+		camera.m_position = glm::vec3(0.0f, 180.0f, 650.0f);
 		Platform->translate(glm::vec3(0.0f, -420.0f, 0.0f));
 		m_scene->addObject(Platform);
 		m_scene->addObject(Boxe);
@@ -231,20 +234,20 @@ namespace testGame {
 			// 13 : left cross7
 		}
 		//ZQSD mode
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || isJoystickPresent && axes[1] > 0.5f) {
-			m_player->translate(glm::vec3(0.0f, 0.0f, -10.0f));
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || isJoystickPresent && axes[1] > 0.1f) {
+			m_player->addForce(forwardForce);
 			m_scene->retrieveCamera().translate(glm::vec3(0.0f, 0.0f, -10.0f));
 		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || isJoystickPresent && axes[1] < -0.5f) {
-			m_player->translate(glm::vec3(0.0f, 0.0f, 10.0f));
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || isJoystickPresent && axes[1] < -0.1f) {
+			m_player->addForce(&forwardForce->MultiplyByScalar(-1.0f));
 			m_scene->retrieveCamera().translate(glm::vec3(0.0f, 0.0f, 10.0f));
 		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || isJoystickPresent && axes[0] < -0.5f) {
-			m_player->translate(glm::vec3(-10.0f, 0.0f, 0.0f));
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || isJoystickPresent && axes[0] < -0.1f) {
+			m_player->addForce(leftForce);
 			m_scene->retrieveCamera().translate(glm::vec3(-10.0f, 0.0f, 0.0f));
 		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || isJoystickPresent && axes[0] > 0.5f) {
-			m_player->translate(glm::vec3(10.0f, 0.0f, 0.0f));
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || isJoystickPresent && axes[0] > 0.1f) {
+			m_player->addForce(&leftForce->MultiplyByScalar(-1.0f));
 			m_scene->retrieveCamera().translate(glm::vec3(10.0f, 0.0f, 0.0f));
 		}
 
