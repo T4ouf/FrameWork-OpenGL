@@ -27,9 +27,9 @@
 #include "Tests/TestImGui.h"
 //#include "Tests/TestPhysics.h"
 //#include "Tests/TestMovement.h"
-#include "Tests/TestGame.h"
 #include "Tests/TestMesh.h"
 #include "Tests/TestScene.h"
+#include "Tests/TestGame.h"
 
 #include "Application.h"
 
@@ -141,9 +141,9 @@ int main() {
 		menuTest->AjouteTest<test::TestImGui>("Interface");
 		//menuTest->AjouteTest<testPhysics::TestPhysics>("Physique");
 		//menuTest->AjouteTest<testMovement::TestMovement>("Mouvements");
-		menuTest->AjouteTest<testGame::TestGame>("Jeu");
 		menuTest->AjouteTest<test::TestMesh>("Mesh");
 		menuTest->AjouteTest<test::TestScene>("Scene");
+		menuTest->AjouteTest<testGame::TestGame>("Jeu");
 
 		
 		float r = 0.0f;

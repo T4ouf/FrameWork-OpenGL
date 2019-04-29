@@ -30,7 +30,7 @@ public:
 	void addForce(Force* f);
 
 	//Object transformation
-	void translate(glm::vec3 translation) override;
+	//void translate(glm::vec3 translation) override;
 	void scale(float factor);
 	void scale(float xfactor, float yfactor, float zfactor);
 	//void rotate(glm::vec3 axis, float DegreeAngle)
@@ -38,6 +38,4 @@ public:
 	void Render(Renderer& renderer);
 	void UpdatePhysic(const std::vector<Force*>& OutsideForces, double deltaTime);
 
-	void setPosition(float x, float y, float z) override;
-	void setPosition(glm::vec3 pos) override;
 };

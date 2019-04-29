@@ -180,7 +180,7 @@ namespace testGame {
 		//Lamp->translate(glm::vec3(150.0f, 150.0f, -175.0f));
 
 		Camera& camera = m_scene->retrieveCamera();
-		camera.m_position = glm::vec3(0.0f, 180.0f, 650.0f);
+		camera.translate(glm::vec3(0.0f, 200.0f, 650.0f));
 		Platform->translate(glm::vec3(0.0f, -420.0f, 0.0f));
 		m_scene->addObject(Platform);
 		m_scene->addObject(Boxe);

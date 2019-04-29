@@ -2,10 +2,46 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+void emptyFunc() {
+	return;
+}
+
+void emptyAnalogFunc(float f) {
+	return;
+}
+
 Application::Application(){
 	//Creating the maps
 	m_mapControllerButton = std::unordered_map<ControllerButton, ButtonFunction>();
 	m_mapControllerAnalogButton = std::unordered_map<ControllerAnalogButton, AnalogButtonFunction>();
+
+	//init buttons with empty func
+	m_mapControllerButton[BUTTON_A] = emptyFunc;
+	m_mapControllerButton[BUTTON_B] = emptyFunc;
+	m_mapControllerButton[BUTTON_X] = emptyFunc;
+	m_mapControllerButton[BUTTON_Y] = emptyFunc;
+
+	m_mapControllerButton[BUTTON_RIGHTCROSS] = emptyFunc;
+	m_mapControllerButton[BUTTON_LEFTCROSS] = emptyFunc;
+	m_mapControllerButton[BUTTON_UPCROSS] = emptyFunc;
+	m_mapControllerButton[BUTTON_DOWNCROSS] = emptyFunc;
+
+	m_mapControllerButton[BUTTON_LB] = emptyFunc;
+	m_mapControllerButton[BUTTON_RB] = emptyFunc;
+	m_mapControllerButton[BUTTON_BACK] = emptyFunc;
+	m_mapControllerButton[BUTTON_START] = emptyFunc;
+
+	m_mapControllerButton[BUTTON_LSTICK_PRESS] = emptyFunc;
+	m_mapControllerButton[BUTTON_RSTICK_PRESS] = emptyFunc;
+
+	//init analog with empty func
+	m_mapControllerAnalogButton[ANALOG_LEFTSTICK_X] = emptyAnalogFunc;
+	m_mapControllerAnalogButton[ANALOG_LEFTSTICK_Y] = emptyAnalogFunc;
+	m_mapControllerAnalogButton[ANALOG_RIGHTSTICK_X] = emptyAnalogFunc;
+	m_mapControllerAnalogButton[ANALOG_RIGHTSTICK_Y] = emptyAnalogFunc;
+
+	m_mapControllerAnalogButton[ANALOG_RIGHTTRIGGER] = emptyAnalogFunc;
+	m_mapControllerAnalogButton[ANALOG_LEFTTRIGGER] = emptyAnalogFunc;
 }
 
 Application::~Application(){
@@ -47,8 +83,8 @@ void Application::processInput(){
 	// 3 : Y button
 	// 4 : LB button
 	// 5 : RB button
-	// 6 : ??
-	// 7 : ??
+	// 6 : back/select button
+	// 7 : start button
 	// 8 : left joystick click
 	// 9 : right joystick click
 	// 10 : top cross
@@ -92,10 +128,12 @@ void Application::processInput(){
 			f();
 		}
 		if (buttons[6] == GLFW_PRESS) {
-			//Unknown button
+			auto f = m_mapControllerButton.at(BUTTON_BACK);
+			f();
 		}
 		if (buttons[7] == GLFW_PRESS) {
-			//Unknown button
+			auto f = m_mapControllerButton.at(BUTTON_START);
+			f();
 		}
 		if (buttons[8] == GLFW_PRESS) {
 			auto f = m_mapControllerButton.at(BUTTON_LSTICK_PRESS);
@@ -113,11 +151,11 @@ void Application::processInput(){
 			auto f = m_mapControllerButton.at(BUTTON_RIGHTCROSS);
 			f();
 		}
-		if (buttons[13] == GLFW_PRESS) {
+		if (buttons[12] == GLFW_PRESS) {
 			auto f = m_mapControllerButton.at(BUTTON_DOWNCROSS);
 			f();
 		}
-		if (buttons[14] == GLFW_PRESS) {
+		if (buttons[13] == GLFW_PRESS) {
 			auto f = m_mapControllerButton.at(BUTTON_LEFTCROSS);
 			f();
 		}
