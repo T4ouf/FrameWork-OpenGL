@@ -80,7 +80,7 @@ public:
 	void lookAt(float x, float y);
 
 	// Looking at an object
-	void lookAt(const Object& o);
+	void lookAt(const Object& o, float offsetX = 0, float offsetY = 0, float offsetZ = 0);
 
 	//translate the camera (MUST MOVE TO POSITIONABLE)
 	void translate(float x, float y, float z);

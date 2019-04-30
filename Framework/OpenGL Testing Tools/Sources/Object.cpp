@@ -44,6 +44,15 @@ void Object::scale(float xfactor, float yfactor, float zfactor){
 
 }
 
+void Object::setMaterial(Material* material){
+	m_graphicObject->SetMaterial(material);
+}
+
+Material * Object::getMaterial(){
+
+	return m_graphicObject->GetMaterial();
+}
+
 
 void Object::Render(Renderer& renderer){
 
