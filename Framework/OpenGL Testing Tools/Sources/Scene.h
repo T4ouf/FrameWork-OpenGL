@@ -14,6 +14,8 @@ private:
 	Camera m_camera;
 	Light m_light;
 
+	glm::vec4 m_BackgroundColor;
+
 	std::vector<Object*> m_sceneObjects;
 	std::vector<Force*> m_sceneForces;
 
@@ -21,7 +23,7 @@ private:
 
 public:
 
-	Scene(const Camera& camera = Camera(), const Light& light = Light());
+	Scene(const Camera& camera = Camera(), const Light& light = Light(), glm::vec3 backgroundColor = glm::vec3(0.0f));
 	~Scene();
 
 	void addObject(Object* o);
@@ -38,6 +40,8 @@ public:
 	void setLightPos(glm::vec3 pos);
 	void setLightPos(float x, float y, float z);
 	void setLight(Light light);
+
+	void setBackgroundColor(float r, float g, float b);
 
 	void Render(Renderer* renderer);
 	void UpdatePhysic(double deltaTime); //Apply physics to all the scene objects

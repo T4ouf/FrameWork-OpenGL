@@ -1,8 +1,8 @@
 #include "Scene.h"
 #include "Force.h"
 
-Scene::Scene(const Camera& camera , const Light& light) : 
-	m_camera(camera), m_light(light), 
+Scene::Scene(const Camera& camera, const Light& light, glm::vec3 backgroundColor) :
+	m_camera(camera), m_light(light), m_BackgroundColor(glm::vec4(backgroundColor, 1.0f)),
 	m_projectionMatrix(glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 1.0f, 5000.0f)){
 
 }
@@ -63,7 +63,14 @@ void Scene::setLight(Light light){
 	m_light = light;
 }
 
+void Scene::setBackgroundColor(float r, float g, float b){
+	m_BackgroundColor = glm::vec4(r, g, b, 1.0f);
+}
+
 void Scene::Render(Renderer* renderer){
+
+	GLCALL(glClearColor(m_BackgroundColor.r, m_BackgroundColor.g, m_BackgroundColor.b, 1.0f));
+	GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 	//1) Setup rendering (Light + Camera)
 	//2) Render every Object
@@ -127,6 +134,7 @@ void Scene::UpdatePhysic(double deltaTime){
 					if (o2->m_physicObject->CollidesWith(o1->m_physicObject, &collisionSide,o2->m_position, o1->m_position)) {
 						//then we compute the collision (reverse)
 						o2->m_physicObject->OnCollision(o1->m_physicObject, &collisionSide, o2->m_position, o1->m_position);
+						
 					}
 				}
 			}
