@@ -16,7 +16,7 @@ namespace test {
 
 	TestScene::TestScene() : m_CouleurLumiere{ 1.0f,1.0f,1.0f,1.0f }, m_translation(glm::vec3(0.0f)), deltaTime(0.0f) {
 
-		lastFrame = 0.0;
+		lastFrame = glfwGetTime();
 		frameNumber = 0;
 
 		m_gravite = new Force(glm::vec3(0.0f,-0.0981,0.0f));
@@ -81,19 +81,20 @@ namespace test {
 		m_Material = Gold;
 
 		m_scene = new Scene();
+		m_scene->setBackgroundColor(0.1f, 0.1f, 0.5f);
 
-		Object* Cube = ObjectFactory::CreateCube(glm::vec3(0.0f, 200.0f, -150.0f), 50, 150, false, m_Material);
+		Object* Cube = ObjectFactory::CreateCube(glm::vec3(0.0f, 180.0f, -150.0f), 50, 150, false, m_Material);
 		Object* Boxe = ObjectFactory::CreateBoxe(glm::vec3(0.0f, -100.0f, -150.0f), 150, 50, 150, 150, true, Ruby);
 		
 		//Boxe->scale(1.0f, 0.33f, 1.0f);	//SERA FAIT DANS LE CREATE BOX
 
 		Light& l = m_scene->retrieveLight();
-		//l.setPosition(150.0f, 150.0f, -175.0f);
-		l.setPosition(0.0f, 200.0f, 0.0f);
+		//l.setPosition(200.0f, 150.0f, -200.0f);
+		l.setPosition(0.0f, 300.0f, -150.0f);
 
 		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial);
 		//Lamp->translate(l.getPosition());
-		Lamp->addForce(new Force(glm::vec3(0.0f,0.001f,0.0f)));
+		//Lamp->addForce(new Force(glm::vec3(0.001f,0.0f,-0.0025f)));
 
 		Camera& camera = m_scene->retrieveCamera();
 		//camera.lookAt(*Cube);

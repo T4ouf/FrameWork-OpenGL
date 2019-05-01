@@ -149,147 +149,147 @@ Mesh * MeshFactory::CreateBoxe(float Xsize,float Ysize, float Zsize, Material* m
 	memset(data, 0, 36 * sizeof(Vertex));
 
 	//back face (plane z = -1)
-	data[0].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[0].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[0].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[0].uv = glm::vec2(0.0f, 0.0f);
 
-	data[1].position = glm::vec3(Xsize, -Ysize, -Zsize);
+	data[1].position = glm::vec3(Xsize/2, -Ysize/2, -Zsize/2);
 	data[1].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[1].uv = glm::vec2(1.0f, 0.0f);
 
-	data[2].position = glm::vec3(Xsize, Ysize, -Zsize);
+	data[2].position = glm::vec3(Xsize/2, Ysize/2, -Zsize/2);
 	data[2].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[2].uv = glm::vec2(1.0f, 1.0f);
 
-	data[3].position = glm::vec3(Xsize, Ysize, -Zsize);
+	data[3].position = glm::vec3(Xsize/2, Ysize/2, -Zsize/2);
 	data[3].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[3].uv = glm::vec2(1.0f, 1.0f);
 
-	data[4].position = glm::vec3(-Xsize, Ysize, -Zsize);
+	data[4].position = glm::vec3(-Xsize/2, Ysize/2, -Zsize/2);
 	data[4].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[4].uv = glm::vec2(0.0f, 1.0f);
 
-	data[5].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[5].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[5].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[5].uv = glm::vec2(0.0f, 0.0f);
 
-	data[6].position = glm::vec3(-Xsize, -Ysize, Zsize);
+	data[6].position = glm::vec3(-Xsize/2, -Ysize/2, Zsize/2);
 	data[6].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[6].uv = glm::vec2(0.0f, 0.0f);
 
-	data[7].position = glm::vec3(Xsize, -Ysize, Zsize);
+	data[7].position = glm::vec3(Xsize/2, -Ysize/2, Zsize/2);
 	data[7].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[7].uv = glm::vec2(1.0f, 0.0f);
 
-	data[8].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[8].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[8].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[8].uv = glm::vec2(1.0f, 1.0f);
 
-	data[9].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[9].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[9].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[9].uv = glm::vec2(1.0f, 1.0f);
 
-	data[10].position = glm::vec3(-Xsize, Ysize, Zsize);
+	data[10].position = glm::vec3(-Xsize/2, Ysize/2, Zsize/2);
 	data[10].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[10].uv = glm::vec2(0.0f, 1.0f);
 
-	data[11].position = glm::vec3(-Xsize, -Ysize, Zsize);
+	data[11].position = glm::vec3(-Xsize/2, -Ysize/2, Zsize/2);
 	data[11].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[11].uv = glm::vec2(0.0f, 0.0f);
 
-	data[12].position = glm::vec3(-Xsize, Ysize, Zsize);
+	data[12].position = glm::vec3(-Xsize/2, Ysize/2, Zsize/2);
 	data[12].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[12].uv = glm::vec2(1.0f, 0.0f);
 
-	data[13].position = glm::vec3(-Xsize, Ysize, -Zsize);
+	data[13].position = glm::vec3(-Xsize/2, Ysize/2, -Zsize/2);
 	data[13].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[13].uv = glm::vec2(1.0f, 1.0f);
 
-	data[14].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[14].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[14].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[14].uv = glm::vec2(0.0f, 1.0f);
 
-	data[15].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[15].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[15].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[15].uv = glm::vec2(0.0f, 1.0f);
 
-	data[16].position = glm::vec3(-Xsize, -Ysize, Zsize);
+	data[16].position = glm::vec3(-Xsize/2, -Ysize/2, Zsize/2);
 	data[16].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[16].uv = glm::vec2(0.0f, 0.0f);
 
-	data[17].position = glm::vec3(-Xsize, Ysize, Zsize);
+	data[17].position = glm::vec3(-Xsize/2, Ysize/2, Zsize/2);
 	data[17].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[17].uv = glm::vec2(1.0f, 0.0f);
 
-	data[18].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[18].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[18].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[18].uv = glm::vec2(1.0f, 0.0f);
 
-	data[19].position = glm::vec3(Xsize, Ysize, -Zsize);
+	data[19].position = glm::vec3(Xsize/2, Ysize/2, -Zsize/2);
 	data[19].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[19].uv = glm::vec2(1.0f, 1.0f);
 
-	data[20].position = glm::vec3(Xsize, -Ysize, -Zsize);
+	data[20].position = glm::vec3(Xsize/2, -Ysize/2, -Zsize/2);
 	data[20].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[20].uv = glm::vec2(0.0f, 1.0f);
 
-	data[21].position = glm::vec3(Xsize, -Ysize, -Zsize);
+	data[21].position = glm::vec3(Xsize/2, -Ysize/2, -Zsize/2);
 	data[21].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[21].uv = glm::vec2(0.0f, 1.0f);
 
-	data[22].position = glm::vec3(Xsize, -Ysize, Zsize);
+	data[22].position = glm::vec3(Xsize/2, -Ysize/2, Zsize/2);
 	data[22].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[22].uv = glm::vec2(0.0f, 0.0f);
 
-	data[23].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[23].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[23].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[23].uv = glm::vec2(1.0f, 0.0f);
 
-	data[24].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[24].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[24].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[24].uv = glm::vec2(0.0f, 1.0f);
 
-	data[25].position = glm::vec3(Xsize, -Ysize, -Zsize);
+	data[25].position = glm::vec3(Xsize/2, -Ysize/2, -Zsize/2);
 	data[25].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[25].uv = glm::vec2(1.0f, 1.0f);
 
-	data[26].position = glm::vec3(Xsize, -Ysize, Zsize);
+	data[26].position = glm::vec3(Xsize/2, -Ysize/2, Zsize/2);
 	data[26].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[26].uv = glm::vec2(1.0f, 0.0f);
 
-	data[27].position = glm::vec3(Xsize, -Ysize, Zsize);
+	data[27].position = glm::vec3(Xsize/2, -Ysize/2, Zsize/2);
 	data[27].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[27].uv = glm::vec2(1.0f, 0.0f);
 
-	data[28].position = glm::vec3(-Xsize, -Ysize, Zsize);
+	data[28].position = glm::vec3(-Xsize/2, -Ysize/2, Zsize/2);
 	data[28].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[28].uv = glm::vec2(0.0f, 0.0f);
 
-	data[29].position = glm::vec3(-Xsize, -Ysize, -Zsize);
+	data[29].position = glm::vec3(-Xsize/2, -Ysize/2, -Zsize/2);
 	data[29].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[29].uv = glm::vec2(0.0f, 1.0f);
 
-	data[30].position = glm::vec3(-Xsize, Ysize, -Zsize);
+	data[30].position = glm::vec3(-Xsize/2, Ysize/2, -Zsize/2);
 	data[30].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[30].uv = glm::vec2(0.0f, 1.0f);
 
-	data[31].position = glm::vec3(Xsize, Ysize, -Zsize);
+	data[31].position = glm::vec3(Xsize/2, Ysize/2, -Zsize/2);
 	data[31].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[31].uv = glm::vec2(1.0f, 1.0f);
 
-	data[32].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[32].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[32].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[32].uv = glm::vec2(1.0f, 0.0f);
 
-	data[33].position = glm::vec3(Xsize, Ysize, Zsize);
+	data[33].position = glm::vec3(Xsize/2, Ysize/2, Zsize/2);
 	data[33].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[33].uv = glm::vec2(1.0f, 0.0f);
 
-	data[34].position = glm::vec3(-Xsize, Ysize, Zsize);
+	data[34].position = glm::vec3(-Xsize/2, Ysize/2, Zsize/2);
 	data[34].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[34].uv = glm::vec2(0.0f, 0.0f);
 
-	data[35].position = glm::vec3(-Xsize, Ysize, -Zsize);
+	data[35].position = glm::vec3(-Xsize/2, Ysize/2, -Zsize/2);
 	data[35].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[35].uv = glm::vec2(0.0f, 1.0f);
 
@@ -336,147 +336,147 @@ Mesh * MeshFactory::CreateCube(float size, Material* material) {
 	memset(data, 0, 36 * sizeof(Vertex));
 
 	//back face (plane z = -1)
-	data[0].position = glm::vec3(-size, -size, -size);
+	data[0].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[0].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[0].uv = glm::vec2(0.0f, 0.0f);
 
-	data[1].position = glm::vec3(size, -size, -size);
+	data[1].position = glm::vec3(size/2, -size/2, -size/2);
 	data[1].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[1].uv = glm::vec2(1.0f, 0.0f);
 
-	data[2].position = glm::vec3(size, size, -size);
+	data[2].position = glm::vec3(size/2, size/2, -size/2);
 	data[2].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[2].uv = glm::vec2(1.0f, 1.0f);
 
-	data[3].position = glm::vec3(size, size, -size);
+	data[3].position = glm::vec3(size/2, size/2, -size/2);
 	data[3].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[3].uv = glm::vec2(1.0f, 1.0f);
 
-	data[4].position = glm::vec3(-size, size, -size);
+	data[4].position = glm::vec3(-size/2, size/2, -size/2);
 	data[4].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[4].uv = glm::vec2(0.0f, 1.0f);
 
-	data[5].position = glm::vec3(-size, -size, -size);
+	data[5].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[5].normal = glm::vec3(0.0f, 0.0f, -1.0f);
 	data[5].uv = glm::vec2(0.0f, 0.0f);
 
-	data[6].position = glm::vec3(-size, -size, size);
+	data[6].position = glm::vec3(-size/2, -size/2, size/2);
 	data[6].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[6].uv = glm::vec2(0.0f, 0.0f);
 
-	data[7].position = glm::vec3(size, -size, size);
+	data[7].position = glm::vec3(size/2, -size/2, size/2);
 	data[7].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[7].uv = glm::vec2(1.0f, 0.0f);
 
-	data[8].position = glm::vec3(size, size, size);
+	data[8].position = glm::vec3(size/2, size/2, size/2);
 	data[8].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[8].uv = glm::vec2(1.0f, 1.0f);
 
-	data[9].position = glm::vec3(size, size, size);
+	data[9].position = glm::vec3(size/2, size/2, size/2);
 	data[9].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[9].uv = glm::vec2(1.0f, 1.0f);
 
-	data[10].position = glm::vec3(-size, size, size);
+	data[10].position = glm::vec3(-size/2, size/2, size/2);
 	data[10].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[10].uv = glm::vec2(0.0f, 1.0f);
 
-	data[11].position = glm::vec3(-size, -size, size);
+	data[11].position = glm::vec3(-size/2, -size/2, size/2);
 	data[11].normal = glm::vec3(0.0f, 0.0f, 1.0f);
 	data[11].uv = glm::vec2(0.0f, 0.0f);
 
-	data[12].position = glm::vec3(-size, size, size);
+	data[12].position = glm::vec3(-size/2, size/2, size/2);
 	data[12].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[12].uv = glm::vec2(1.0f, 0.0f);
 
-	data[13].position = glm::vec3(-size, size, -size);
+	data[13].position = glm::vec3(-size/2, size/2, -size/2);
 	data[13].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[13].uv = glm::vec2(1.0f, 1.0f);
 
-	data[14].position = glm::vec3(-size, -size, -size);
+	data[14].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[14].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[14].uv = glm::vec2(0.0f, 1.0f);
 
-	data[15].position = glm::vec3(-size, -size, -size);
+	data[15].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[15].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[15].uv = glm::vec2(0.0f, 1.0f);
 
-	data[16].position = glm::vec3(-size, -size, size);
+	data[16].position = glm::vec3(-size/2, -size/2, size/2);
 	data[16].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[16].uv = glm::vec2(0.0f, 0.0f);
 
-	data[17].position = glm::vec3(-size, size, size);
+	data[17].position = glm::vec3(-size/2, size/2, size/2);
 	data[17].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 	data[17].uv = glm::vec2(1.0f, 0.0f);
 
-	data[18].position = glm::vec3(size, size, size);
+	data[18].position = glm::vec3(size/2, size/2, size/2);
 	data[18].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[18].uv = glm::vec2(1.0f, 0.0f);
 
-	data[19].position = glm::vec3(size, size, -size);
+	data[19].position = glm::vec3(size/2, size/2, -size/2);
 	data[19].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[19].uv = glm::vec2(1.0f, 1.0f);
 
-	data[20].position = glm::vec3(size, -size, -size);
+	data[20].position = glm::vec3(size/2, -size/2, -size/2);
 	data[20].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[20].uv = glm::vec2(0.0f, 1.0f);
 
-	data[21].position = glm::vec3(size, -size, -size);
+	data[21].position = glm::vec3(size/2, -size/2, -size/2);
 	data[21].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[21].uv = glm::vec2(0.0f, 1.0f);
 
-	data[22].position = glm::vec3(size, -size, size);
+	data[22].position = glm::vec3(size/2, -size/2, size/2);
 	data[22].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[22].uv = glm::vec2(0.0f, 0.0f);
 
-	data[23].position = glm::vec3(size, size, size);
+	data[23].position = glm::vec3(size/2, size/2, size/2);
 	data[23].normal = glm::vec3(1.0f, 0.0f, 0.0f);
 	data[23].uv = glm::vec2(1.0f, 0.0f);
 
-	data[24].position = glm::vec3(-size, -size, -size);
+	data[24].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[24].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[24].uv = glm::vec2(0.0f, 1.0f);
 
-	data[25].position = glm::vec3(size, -size, -size);
+	data[25].position = glm::vec3(size/2, -size/2, -size/2);
 	data[25].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[25].uv = glm::vec2(1.0f, 1.0f);
 
-	data[26].position = glm::vec3(size, -size, size);
+	data[26].position = glm::vec3(size/2, -size/2, size/2);
 	data[26].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[26].uv = glm::vec2(1.0f, 0.0f);
 
-	data[27].position = glm::vec3(size, -size, size);
+	data[27].position = glm::vec3(size/2, -size/2, size/2);
 	data[27].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[27].uv = glm::vec2(1.0f, 0.0f);
 
-	data[28].position = glm::vec3(-size, -size, size);
+	data[28].position = glm::vec3(-size/2, -size/2, size/2);
 	data[28].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[28].uv = glm::vec2(0.0f, 0.0f);
 
-	data[29].position = glm::vec3(-size, -size, -size);
+	data[29].position = glm::vec3(-size/2, -size/2, -size/2);
 	data[29].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 	data[29].uv = glm::vec2(0.0f, 1.0f);
 
-	data[30].position = glm::vec3(-size, size, -size);
+	data[30].position = glm::vec3(-size/2, size/2, -size/2);
 	data[30].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[30].uv = glm::vec2(0.0f, 1.0f);
 
-	data[31].position = glm::vec3(size, size, -size);
+	data[31].position = glm::vec3(size/2, size/2, -size/2);
 	data[31].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[31].uv = glm::vec2(1.0f, 1.0f);
 
-	data[32].position = glm::vec3(size, size, size);
+	data[32].position = glm::vec3(size/2, size/2, size/2);
 	data[32].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[32].uv = glm::vec2(1.0f, 0.0f);
 
-	data[33].position = glm::vec3(size, size, size);
+	data[33].position = glm::vec3(size/2, size/2, size/2);
 	data[33].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[33].uv = glm::vec2(1.0f, 0.0f);
 
-	data[34].position = glm::vec3(-size, size, size);
+	data[34].position = glm::vec3(-size/2, size/2, size/2);
 	data[34].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[34].uv = glm::vec2(0.0f, 0.0f);
 
-	data[35].position = glm::vec3(-size, size, -size);
+	data[35].position = glm::vec3(-size/2, size/2, -size/2);
 	data[35].normal = glm::vec3(0.0f, 1.0f, 0.0f);
 	data[35].uv = glm::vec2(0.0f, 1.0f);
 

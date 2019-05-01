@@ -80,12 +80,11 @@ void Camera::lookAt(float x, float y) {
 
 }
 
-void Camera::lookAt(const Object& o) {
-
+void Camera::lookAt(const Object & o, float offsetX, float offsetY, float offsetZ){
 	const glm::vec3& pos = o.getPosition();
-	lookAt(pos.x, pos.y, pos.z + 400);
-
+	lookAt(pos.x+offsetX, pos.y + offsetY, pos.z + offsetZ);
 }
+
 
 void Camera::translate(float x, float y, float z){
 

@@ -37,6 +37,9 @@ public:
 	void scale(float xfactor, float yfactor, float zfactor);
 	//void rotate(glm::vec3 axis, float DegreeAngle)
 
+	void setMaterial(Material* material);
+	Material* getMaterial();
+
 	void Render(Renderer& renderer);
 	void UpdatePhysic(const std::vector<Force*>& OutsideForces, double deltaTime);
 
