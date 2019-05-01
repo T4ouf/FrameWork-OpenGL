@@ -15,9 +15,9 @@ private:
 	std::vector<Force*> m_forces;
 	int m_counter;
 
-	void CenterToCorner(glm::vec3& position);
-	void CornerToCenter(glm::vec3& position);
-	void OffsetPosition(float sign, glm::vec3& position);
+	void CenterToCorner(glm::vec3& position, PhysicObject* object);
+	void CornerToCenter(glm::vec3& position, PhysicObject* object);
+	void OffsetPosition(float sign, glm::vec3& position, PhysicObject* object);
 public:
 	double m_width;
 	PhysicObject(glm::vec3* position, double width, double height, double length, double mass, bool isAnchor, double bounceCoeff);

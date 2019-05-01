@@ -18,14 +18,19 @@
 #include <glm/gtx/string_cast.hpp>
 
 namespace testGame {
+	Object* player;
 
 
-	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -0.3f));
-	Force* leftForce = new Force(glm::vec3(-0.3f, 0.0f, 0.0f));
-	Force* upForce = new Force(glm::vec3(0.0f, 1.0f, 0.0f));
+	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -3.0f));
+	Force* leftForce = new Force(glm::vec3(-3.0f, 0.0f, 0.0f));
+	Force* upForce = new Force(glm::vec3(0.0f, 6.0f, 0.0f));
 
 	Object* platform;
 	
+	void jump_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+		if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+			player->addForce(new Force(*upForce));
+	}
 
 	TestGame::~TestGame() {
 		delete Gold;
@@ -57,7 +62,7 @@ namespace testGame {
 		ProcessInput(glfwGetCurrentContext());
 
 		//Slow down
-		//m_player->addForce(new Force(glm::vec3(-0.1f * m_player->GetSpeed().x, 0.0f, -0.1f * m_player->GetSpeed().z)));
+		m_player->addForce(new Force(glm::vec3(-0.1f * m_player->GetSpeed().x, 0.0f, -0.1f * m_player->GetSpeed().z)));
 
 		m_scene->retrieveCamera().m_position = m_player->getPosition() + glm::vec3(0.0f, 200.0f, 650.0f);
 
@@ -79,11 +84,13 @@ namespace testGame {
 
 		m_scene->Render(Renderer::getInstance());
 		
-		if (frameNumber % 10 == 0) {
-			std::cout << "Player rightSide : " << m_player->getPosition().x + m_player->m_physicObject->m_width / 2.0 << std::endl;
-			std::cout << "Player leftSide : " << m_player->getPosition().x - m_player->m_physicObject->m_width / 2.0 << std::endl;
-			std::cout << "Platform rightSide : " << platform->getPosition().x + platform->m_physicObject->m_width / 2.0 << std::endl;
-			std::cout << "Platform leftSide : " << platform->getPosition().x - platform->m_physicObject->m_width / 2.0 << std::endl;
+		if (frameNumber % 15 == 0) {
+			std::cout << "Player rightSide : " << m_player->getPosition().x + (m_player->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Player leftSide : " << m_player->getPosition().x - (m_player->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform rightSide : " << platform->getPosition().x + (platform->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform leftSide : " << platform->getPosition().x - (platform->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform position : " << glm::to_string(platform->getPosition()) << std::endl;
+			std::cout << "Player position : " << glm::to_string(m_player->getPosition()) << std::endl << std::endl;
 		}
 		frameNumber++;
 
@@ -121,7 +128,7 @@ namespace testGame {
 		lastFrame = 0.0;
 		frameNumber = 0;
 
-		glm::vec3 gravityDirection(-0.0981f, 0.0f, 0.0f);
+		glm::vec3 gravityDirection(0.0f, -0.0981f, 0.0f);
 		m_gravite = new Force(gravityDirection);
 		m_reverseGravity = new Force(gravityDirection*-1.0f);
 
@@ -186,10 +193,11 @@ namespace testGame {
 
 		m_scene = new Scene();
 
-		Object* Platform = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 350, 150, true, m_Material);
+		Object* Platform = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 850, 150, true, m_Material);
 		Object* Boxe = ObjectFactory::CreateBoxe(glm::vec3(0.0f, 0.0f, 0.0f), 75, 50, 150, 150, false, Ruby);
 		m_player = Boxe;
-		//m_player->SetBounceCoeff(0.0);
+		player = Boxe;
+		m_player->SetBounceCoeff(0.0);
 		platform = Platform;
 
 		Light& l = m_scene->retrieveLight();
@@ -201,7 +209,7 @@ namespace testGame {
 
 		Camera& camera = m_scene->retrieveCamera();
 		camera.translate(glm::vec3(0.0f, 200.0f, 650.0f));
-		Platform->translate(glm::vec3(550.0f, 0.0f, 0.0f));
+		Platform->translate(glm::vec3(0.0f, -450.0f, 0.0f));
 		m_scene->addObject(Platform);
 		m_scene->addObject(Boxe);
 		m_scene->addObject(Lamp);
@@ -258,9 +266,8 @@ namespace testGame {
 			m_player->addForce(new Force(leftForce->MultiplyByScalar(-1.0f)));
 		}
 		//Jump
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || isJoystickPresent && buttons[0] == GLFW_PRESS) {
-			m_player->addForce(new Force(*upForce));
-		}
+		glfwSetKeyCallback(window, jump_callback);
+		
 	}
 
 	// glfw: whenever the window size changed (by OS or user resize) this callback function executes

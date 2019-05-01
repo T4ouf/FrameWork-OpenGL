@@ -4,35 +4,37 @@
 #include <glm/gtx/string_cast.hpp>
 
 
-void PhysicObject::CenterToCorner(glm::vec3& position)
+void PhysicObject::CenterToCorner(glm::vec3& position, PhysicObject* object)
 {
-	OffsetPosition(-1.0f, position);
+	OffsetPosition(-1.0f, position, object);
 }
 
-void PhysicObject::CornerToCenter(glm::vec3& position)
+void PhysicObject::CornerToCenter(glm::vec3& position, PhysicObject* object)
 {
-	OffsetPosition(1.0f, position);
+	OffsetPosition(1.0f, position, object);
 }
 
 /*
 	Sign must be 1 or -1 exclusively. 1 gets the position from the corner to the center, -1 does the opposite
 */
-void PhysicObject::OffsetPosition(float sign, glm::vec3& position)
+void PhysicObject::OffsetPosition(float sign, glm::vec3& position, PhysicObject* object)
 {
-	position += sign * glm::vec3(m_width / 2, m_height / 2, m_length / 2);
+	position = position + sign * glm::vec3(object->m_width / 2, object->m_height / 2, object->m_length / 2);
 }
 
-PhysicObject::PhysicObject(glm::vec3 * position, double width, double height, double length, double mass, bool isAnchor, double bounceCoeff): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(bounceCoeff)
+PhysicObject::PhysicObject(glm::vec3* position, double width, double height, double length, double mass, bool isAnchor, double bounceCoeff): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(bounceCoeff)
 {
 	m_forces = std::vector<Force*>();
 }
 
 PhysicObject::PhysicObject(glm::vec3* position, double width, double height, double length, double mass, bool isAnchor): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(1.0)
 {
+	m_forces = std::vector<Force*>();
 }
 
 PhysicObject::PhysicObject(glm::vec3* position, double size, double mass, bool isAnchor): m_width(size), m_height(size), m_length(size), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(1.0)
 {
+	m_forces = std::vector<Force*>();
 }
 
 PhysicObject::~PhysicObject()
@@ -69,10 +71,11 @@ std::vector<glm::vec3> PhysicObject::GetCornersPos(glm::vec3& position)
 	return corners;
 }
 
-bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition){
-
-	CenterToCorner(thisPosition);
-	CenterToCorner(thatPosition);
+bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPositionRef, glm::vec3& thatPositionRef){
+	glm::vec3 thisPos = thisPositionRef, thatPos = thatPositionRef;
+	glm::vec3& thisPosition = thisPos, thatPosition = thatPos;
+	CenterToCorner(thisPosition, this);
+	CenterToCorner(thatPosition, that);
 
 	/* Ver Thomas
 	float thisLeft = thisPosition.x - this->m_width / 2, thatRight = thatPosition.x + that->m_width/2, thisRight = thisPosition.x + this->m_width/2, thatLeft = thatPosition.x - that->m_width / 2;
@@ -89,10 +92,6 @@ bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::v
 		if(thisTop <= thatBot && thisBot >= thatTop) {//vertical check (y)
 			if(thisFront <= thatBehind && thisBehind >= thatFront) {//depth check (z)
 
-				std::cout << "This position (corner) : " << glm::to_string(thisPosition) << " || thatPosition (corner) : " << glm::to_string(thatPosition) << std::endl;
-				std::cout << "This left : " << thisLeft << " || That right : " << thatRight << std::endl;
-				std::cout << "This right : " << thisRight << " || That left : " << thatLeft << std::endl;
-
 				//Now calculates distance to each sides, to determine on which the collision has occured
 				//All distances are from the indicated sides on this object
 				float distances[] = {/*leftDistance = */ abs(thisLeft - thatRight), /*rightDistance = */abs(thisRight - thatLeft), /*topDistance = */abs(thisTop - thatBot), /*botDistance = */abs(thisBot - thatTop), /*frontDistance = */abs(thisFront - thatBehind), /*behindDistance =*/ abs(thisBehind - thatFront) };
@@ -104,14 +103,14 @@ bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::v
 
 				//Same order of sides in distances and Sides enum
 				*collisionSide = (Sides)indexOfSmallestDistance;
-				CornerToCenter(thisPosition);
-				CornerToCenter(thatPosition);
+				//CornerToCenter(thisPosition);
+				//CornerToCenter(thatPosition);
 				return true;
 			}
 		}
 	}
-	CornerToCenter(thisPosition);
-	CornerToCenter(thatPosition);
+	//CornerToCenter(thisPosition);
+	//CornerToCenter(thatPosition);
 	return false;
 }
 
@@ -168,7 +167,7 @@ void PhysicObject::OnCollision(PhysicObject* that, Sides* collisionSide, glm::ve
 	that->m_speed = thatSpeed * (float) that->m_bounceCoeff;
 
 	while (this->CollidesWith(that, collisionSide, thisPosition, thatPosition)) {
-		thisPosition -= normalToFace;
+		thisPosition -= normalToFace*0.1f;
 	}
 }
 
