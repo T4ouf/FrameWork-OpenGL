@@ -30,3 +30,8 @@ Force Force::MultiplyByScalar(float k)
 	return result;
 }
 
+Force Force::Reverse()
+{
+	return this->MultiplyByScalar(-1.0f);
+}
+

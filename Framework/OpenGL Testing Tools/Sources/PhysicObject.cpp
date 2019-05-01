@@ -22,9 +22,17 @@ void PhysicObject::OffsetPosition(float sign, glm::vec3& position)
 	position += sign * glm::vec3(m_width / 2, m_height / 2, m_length / 2);
 }
 
-PhysicObject::PhysicObject(glm::vec3* position, double width, double height, double length, double mass, bool isAnchor): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor)
+PhysicObject::PhysicObject(glm::vec3 * position, double width, double height, double length, double mass, bool isAnchor, double bounceCoeff): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(bounceCoeff)
 {
 	m_forces = std::vector<Force*>();
+}
+
+PhysicObject::PhysicObject(glm::vec3* position, double width, double height, double length, double mass, bool isAnchor): m_width(width), m_height(height), m_length(length), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(1.0)
+{
+}
+
+PhysicObject::PhysicObject(glm::vec3* position, double size, double mass, bool isAnchor): m_width(size), m_height(size), m_length(size), m_speed(glm::vec3(0.0)), m_mass(mass), m_isAnchor(isAnchor), m_bounceCoeff(1.0)
+{
 }
 
 PhysicObject::~PhysicObject()
@@ -64,6 +72,7 @@ std::vector<glm::vec3> PhysicObject::GetCornersPos(glm::vec3& position)
 bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition){
 
 	CenterToCorner(thisPosition);
+	CenterToCorner(thatPosition);
 
 	/* Ver Thomas
 	float thisLeft = thisPosition.x - this->m_width / 2, thatRight = thatPosition.x + that->m_width/2, thisRight = thisPosition.x + this->m_width/2, thatLeft = thatPosition.x - that->m_width / 2;
@@ -76,9 +85,13 @@ bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::v
 	float thisTop = thisPosition.y, thatBot = thatPosition.y + that->m_height, thisBot = thisPosition.y + this->m_height, thatTop = thatPosition.y;
 	float thisFront = thisPosition.z, thatBehind = thatPosition.z + that->m_length, thisBehind = thisPosition.z + this->m_length, thatFront = thatPosition.z;
 	
-	if(thisLeft < thatRight && thisRight > thatLeft){//horizontal check
-		if(thisTop < thatBot && thisBot > thatTop) {//vertical check
-			if(thisFront < thatBehind && thisBehind > thatFront) {//depth check
+	if(thisLeft <= thatRight && thisRight >= thatLeft){//horizontal check (x)
+		if(thisTop <= thatBot && thisBot >= thatTop) {//vertical check (y)
+			if(thisFront <= thatBehind && thisBehind >= thatFront) {//depth check (z)
+
+				std::cout << "This position (corner) : " << glm::to_string(thisPosition) << " || thatPosition (corner) : " << glm::to_string(thatPosition) << std::endl;
+				std::cout << "This left : " << thisLeft << " || That right : " << thatRight << std::endl;
+				std::cout << "This right : " << thisRight << " || That left : " << thatLeft << std::endl;
 
 				//Now calculates distance to each sides, to determine on which the collision has occured
 				//All distances are from the indicated sides on this object
@@ -92,18 +105,29 @@ bool PhysicObject::CollidesWith(PhysicObject* that, Sides* collisionSide, glm::v
 				//Same order of sides in distances and Sides enum
 				*collisionSide = (Sides)indexOfSmallestDistance;
 				CornerToCenter(thisPosition);
+				CornerToCenter(thatPosition);
 				return true;
 			}
 		}
 	}
 	CornerToCenter(thisPosition);
+	CornerToCenter(thatPosition);
 	return false;
 }
 
+//Don't call this function with an anchor
 void PhysicObject::OnCollision(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition){
+	if (m_isAnchor)
+		std::cerr << "Can't call OnCollision() with an anchor" << std::endl;
+
 	Sides side = *collisionSide;
 	glm::vec3 normalToFace;
-	glm::vec3 thisSpeed = this->m_speed, thatSpeed = that->m_speed; 
+	glm::vec3 thisSpeed = this->m_speed, thatSpeed = that->m_speed;
+
+	//Both objects are immobile
+	if (thisSpeed == glm::vec3(0.0f) && thatSpeed == glm::vec3(0.0f)) {
+		return;
+	}
 
 	if (side == LEFTSIDE) normalToFace = glm::vec3(-1.0f, 0.0f, 0.0f);
 	else if(side == RIGHTSIDE) normalToFace = glm::vec3(1.0f, 0.0f, 0.0f);
@@ -114,25 +138,38 @@ void PhysicObject::OnCollision(PhysicObject* that, Sides* collisionSide, glm::ve
 
 	float thisNormalComponent = glm::dot(normalToFace, thisSpeed);
 
-	//If the other object is immobile, simply reverse the normal component of this speed
+	//If the other object is immobile, the direction will be opposite of the current speed
 	if (thatSpeed == glm::vec3(0.0f)) {
-		thisSpeed = -2 * thisNormalComponent * normalToFace + thisSpeed;
-		this->m_speed = thisSpeed;
-		this->Update(2.0f, thisPosition);
-		return;
+
+		thisSpeed = (-2.0f * thisNormalComponent * normalToFace + thisSpeed) * (float)(that->m_mass / (this->m_mass + that->m_mass));
+
+		if (!that->m_isAnchor)
+			thatSpeed = (2.0f * thisNormalComponent * normalToFace) * (float)(this->m_mass / (this->m_mass + that->m_mass));
+
+	} else {
+		float thatNormalComponent = glm::dot(normalToFace, thatSpeed);
+		if (thisSpeed == glm::vec3(0.0f)) {//This object is immobile
+
+			thisSpeed = (2.0f * thatNormalComponent * normalToFace) * (float)(that->m_mass / (this->m_mass + that->m_mass));
+			thatSpeed = (-2.0f * thatNormalComponent * normalToFace + thatSpeed) * (float)(this->m_mass / (this->m_mass + that->m_mass));
+
+		} else { //Both speeds are non-null
+
+			thisSpeed = (-2.0f * thisNormalComponent * normalToFace + thisSpeed) * (float)(that->m_mass / (this->m_mass + that->m_mass));
+			thatSpeed = (-2.0f * thatNormalComponent * normalToFace + thatSpeed) * (float)(this->m_mass / (this->m_mass + that->m_mass));
+
+		}
 	}
-
-	float thatNormalComponent = glm::dot(normalToFace, thatSpeed);
-
-	thisSpeed = (-2.0f * thisNormalComponent * normalToFace + thisSpeed) * (float) (that->m_mass/(this->m_mass+that->m_mass));
-	thatSpeed = (-2.0f * thatNormalComponent * normalToFace + thatSpeed) * (float) (this->m_mass / (this->m_mass + that->m_mass));
 
 	glm::vec3 distanceCenterToCenter = thisPosition - thatPosition;
 
 
-	this->m_speed = glm::vec3(thisSpeed);
-	that->m_speed = glm::vec3(thatSpeed);
-	this->Update(2.0f, thisPosition);
+	this->m_speed = thisSpeed * (float) m_bounceCoeff;
+	that->m_speed = thatSpeed * (float) that->m_bounceCoeff;
+
+	while (this->CollidesWith(that, collisionSide, thisPosition, thatPosition)) {
+		thisPosition -= normalToFace;
+	}
 }
 
 glm::vec3 PhysicObject::GetSpeed()
@@ -143,6 +180,11 @@ glm::vec3 PhysicObject::GetSpeed()
 void PhysicObject::SetSpeed(glm::vec3 speed)
 {
 	m_speed = speed;
+}
+
+void PhysicObject::SetBounceCoeff(double coeff)
+{
+	m_bounceCoeff = coeff;
 }
 
 

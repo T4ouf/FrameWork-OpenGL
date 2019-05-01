@@ -20,10 +20,12 @@
 namespace testGame {
 
 
-	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -0.01f));
-	Force* leftForce = new Force(glm::vec3(-0.01f, 0.0f, 0.0f));
-	
+	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -0.3f));
+	Force* leftForce = new Force(glm::vec3(-0.3f, 0.0f, 0.0f));
+	Force* upForce = new Force(glm::vec3(0.0f, 1.0f, 0.0f));
 
+	Object* platform;
+	
 
 	TestGame::~TestGame() {
 		delete Gold;
@@ -54,6 +56,11 @@ namespace testGame {
 
 		ProcessInput(glfwGetCurrentContext());
 
+		//Slow down
+		//m_player->addForce(new Force(glm::vec3(-0.1f * m_player->GetSpeed().x, 0.0f, -0.1f * m_player->GetSpeed().z)));
+
+		m_scene->retrieveCamera().m_position = m_player->getPosition() + glm::vec3(0.0f, 200.0f, 650.0f);
+
 	}
 
 	void TestGame::OnRender() {
@@ -71,7 +78,13 @@ namespace testGame {
 		//}
 
 		m_scene->Render(Renderer::getInstance());
-
+		
+		if (frameNumber % 10 == 0) {
+			std::cout << "Player rightSide : " << m_player->getPosition().x + m_player->m_physicObject->m_width / 2.0 << std::endl;
+			std::cout << "Player leftSide : " << m_player->getPosition().x - m_player->m_physicObject->m_width / 2.0 << std::endl;
+			std::cout << "Platform rightSide : " << platform->getPosition().x + platform->m_physicObject->m_width / 2.0 << std::endl;
+			std::cout << "Platform leftSide : " << platform->getPosition().x - platform->m_physicObject->m_width / 2.0 << std::endl;
+		}
 		frameNumber++;
 
 	}
@@ -95,6 +108,9 @@ namespace testGame {
 		else if (ImGui::Button("Gravite++")) {
 			m_scene->addGlobalForce(m_gravite); //A VERIFIER SI CE N'EST PAS AJOUTE PLUSIEURS FOIS..
 		}
+		else if (ImGui::Button("Gravite--")) {
+			m_scene->addGlobalForce(m_reverseGravity);
+		}
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
@@ -105,7 +121,9 @@ namespace testGame {
 		lastFrame = 0.0;
 		frameNumber = 0;
 
-		m_gravite = new Force(glm::vec3(0.0f, -0.0981, 0.0f));
+		glm::vec3 gravityDirection(-0.0981f, 0.0f, 0.0f);
+		m_gravite = new Force(gravityDirection);
+		m_reverseGravity = new Force(gravityDirection*-1.0f);
 
 		//On autorise et paramètre la transparence
 		GLCALL(glEnable(GL_BLEND));
@@ -171,17 +189,19 @@ namespace testGame {
 		Object* Platform = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 350, 150, true, m_Material);
 		Object* Boxe = ObjectFactory::CreateBoxe(glm::vec3(0.0f, 0.0f, 0.0f), 75, 50, 150, 150, false, Ruby);
 		m_player = Boxe;
+		//m_player->SetBounceCoeff(0.0);
+		platform = Platform;
 
 		Light& l = m_scene->retrieveLight();
 		l.m_intensity = 500;
 		l.setPosition(0, 175, 0);
 
-		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(), 25, 1, false, LampMaterial);
+		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(), 25, 1, true, LampMaterial);
 		//Lamp->translate(glm::vec3(150.0f, 150.0f, -175.0f));
 
 		Camera& camera = m_scene->retrieveCamera();
 		camera.translate(glm::vec3(0.0f, 200.0f, 650.0f));
-		Platform->translate(glm::vec3(0.0f, -420.0f, 0.0f));
+		Platform->translate(glm::vec3(550.0f, 0.0f, 0.0f));
 		m_scene->addObject(Platform);
 		m_scene->addObject(Boxe);
 		m_scene->addObject(Lamp);
@@ -194,15 +214,6 @@ namespace testGame {
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
 
-		//Saut
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			//glfwSetCursorPosCallback(window, NULL);
-			std::cout << "Before translate player : " << glm::to_string(m_player->getPosition()) << " camera : " << glm::to_string(m_scene->retrieveCamera().m_position) << std::endl;
-			m_player->translate(glm::vec3(0.0f, 10.0f, 0.0f));
-			m_scene->retrieveCamera().translate(glm::vec3(0.0f, 10.0f, 0.0f));
-			std::cout << "After translate player : " << glm::to_string(m_player->getPosition()) << " camera : " << glm::to_string(m_scene->retrieveCamera().m_position) << std::endl;
-		}
 
 		// Get controller's state
 		int nbJoystickAxes, nbJoystickButtons; // 6 et 14 avec manette xbox 360
@@ -234,30 +245,22 @@ namespace testGame {
 			// 13 : left cross7
 		}
 		//ZQSD mode
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || isJoystickPresent && axes[1] > 0.1f) {
-			m_player->addForce(forwardForce);
-			m_scene->retrieveCamera().translate(glm::vec3(0.0f, 0.0f, -10.0f));
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || isJoystickPresent && axes[1] > 0.2f) {
+			m_player->addForce(new Force(*forwardForce));
 		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || isJoystickPresent && axes[1] < -0.1f) {
-			m_player->addForce(&forwardForce->MultiplyByScalar(-1.0f));
-			m_scene->retrieveCamera().translate(glm::vec3(0.0f, 0.0f, 10.0f));
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || isJoystickPresent && axes[1] < -0.2f) {
+			m_player->addForce(new Force(forwardForce->MultiplyByScalar(-1.0f)));
 		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || isJoystickPresent && axes[0] < -0.1f) {
-			m_player->addForce(leftForce);
-			m_scene->retrieveCamera().translate(glm::vec3(-10.0f, 0.0f, 0.0f));
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || isJoystickPresent && axes[0] < -0.2f) {
+			m_player->addForce(new Force(*leftForce));
 		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || isJoystickPresent && axes[0] > 0.1f) {
-			m_player->addForce(&leftForce->MultiplyByScalar(-1.0f));
-			m_scene->retrieveCamera().translate(glm::vec3(10.0f, 0.0f, 0.0f));
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || isJoystickPresent && axes[0] > 0.2f) {
+			m_player->addForce(new Force(leftForce->MultiplyByScalar(-1.0f)));
 		}
-
-		/*
-		//Mode fleches
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		*/
+		//Jump
+		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || isJoystickPresent && buttons[0] == GLFW_PRESS) {
+			m_player->addForce(new Force(*upForce));
+		}
 	}
 
 	// glfw: whenever the window size changed (by OS or user resize) this callback function executes

@@ -88,3 +88,12 @@ void Object::UpdatePhysic(const std::vector<Force*>& OutsideForces, double delta
 	m_position+=deltaPos;
 
 }
+
+glm::vec3 Object::GetSpeed()
+{
+	return m_physicObject->GetSpeed();
+}
+
+void Object::SetBounceCoeff(double coeff) {
+	m_physicObject->SetBounceCoeff(coeff);
+}

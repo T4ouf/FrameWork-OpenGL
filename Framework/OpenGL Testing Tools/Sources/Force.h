@@ -24,5 +24,6 @@ public:
 	Force MultiplyByScalar(int k);
 	void MultiplySelfByScalar(float k);
 	Force MultiplyByMatrix(glm::mat4 matrix);
+	Force Reverse();
 };
 

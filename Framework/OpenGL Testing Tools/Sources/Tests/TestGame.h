@@ -52,6 +52,7 @@ namespace testGame {
 		Shader* m_Shader;
 
 		Force* m_gravite;
+		Force* m_reverseGravity;
 
 		float m_CouleurLumiere[4];
 		float m_ClearCouleur[3];
