@@ -89,7 +89,7 @@ namespace test {
 		//Boxe->scale(1.0f, 0.33f, 1.0f);	//SERA FAIT DANS LE CREATE BOX
 
 		Light& l = m_scene->retrieveLight();
-		//l.setPosition(150.0f, 150.0f, -175.0f);
+		//l.setPosition(200.0f, 150.0f, -200.0f);
 		l.setPosition(0.0f, 300.0f, -150.0f);
 
 		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(),25,1,false,LampMaterial);
