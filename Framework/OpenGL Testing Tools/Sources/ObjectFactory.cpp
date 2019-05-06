@@ -4,18 +4,18 @@
 #include "Mesh.h"
 #include "PhysicObject.h"
 
-Object* ObjectFactory::CreateCube(glm::vec3 position, float size, float mass, bool isAnchor, Material* material) {
+Object* ObjectFactory::CreateCube(glm::vec3 position, float size, float mass, bool isAnchor, Material* material, double bounceCoeff) {
 	
 	Mesh* graphics = MeshFactory::CreateCube(size, material);
-	PhysicObject* physic = new PhysicObject(&position, size, size, size, mass, isAnchor);
+	PhysicObject* physic = new PhysicObject(&position, size, size, size, mass, isAnchor, bounceCoeff);
 
 	return new Object(graphics, physic, position);
 }
 
-Object * ObjectFactory::CreateBoxe(glm::vec3 position, float xSize, float ySize, float zSize, float mass, bool isAnchor, Material* material){
+Object * ObjectFactory::CreateBoxe(glm::vec3 position, float xSize, float ySize, float zSize, float mass, bool isAnchor, Material* material, double bounceCoeff){
 
 	Mesh* graphics = MeshFactory::CreateBoxe(xSize,ySize,zSize, material);
-	PhysicObject* physic = new PhysicObject(&position, xSize, ySize, zSize, mass, isAnchor);
+	PhysicObject* physic = new PhysicObject(&position, xSize, ySize, zSize, mass, isAnchor, bounceCoeff);
 
 	return new Object(graphics, physic, position);
 

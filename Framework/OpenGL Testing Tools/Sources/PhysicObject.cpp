@@ -41,8 +41,7 @@ PhysicObject::~PhysicObject()
 {
 }
 
-void PhysicObject::ApplyForce(Force* f)
-{
+void PhysicObject::ApplyForce(Force* f){
 	m_forces.push_back(f);
 }
 

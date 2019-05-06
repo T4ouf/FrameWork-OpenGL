@@ -84,14 +84,6 @@ namespace testGame {
 
 		m_scene->Render(Renderer::getInstance());
 		
-		if (frameNumber % 15 == 0) {
-			std::cout << "Player rightSide : " << m_player->getPosition().x + (m_player->m_physicObject->m_width / 2.0) << std::endl;
-			std::cout << "Player leftSide : " << m_player->getPosition().x - (m_player->m_physicObject->m_width / 2.0) << std::endl;
-			std::cout << "Platform rightSide : " << platform->getPosition().x + (platform->m_physicObject->m_width / 2.0) << std::endl;
-			std::cout << "Platform leftSide : " << platform->getPosition().x - (platform->m_physicObject->m_width / 2.0) << std::endl;
-			std::cout << "Platform position : " << glm::to_string(platform->getPosition()) << std::endl;
-			std::cout << "Player position : " << glm::to_string(m_player->getPosition()) << std::endl << std::endl;
-		}
 		frameNumber++;
 
 	}

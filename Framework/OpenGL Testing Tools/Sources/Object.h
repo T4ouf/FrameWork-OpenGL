@@ -9,11 +9,10 @@
 class Object : public Positionable{
 private: 
 	Mesh* m_graphicObject;
+	PhysicObject* m_physicObject;
 	
 
 	glm::mat4 m_modelMatrix;
-	
-	void updatePos(glm::mat4 ModelMatrix);
 
 	std::vector<Force*> m_tmpForces;
 
@@ -21,8 +20,6 @@ private:
 
 	
 public: 
-	//PUT BACK
-	PhysicObject* m_physicObject;
 
 	Object(Mesh* graphics, PhysicObject* physic, glm::vec3 position);
 	~Object();
