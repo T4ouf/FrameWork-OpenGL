@@ -200,7 +200,7 @@ Shader* ShaderMap::getShader(ShaderName shader){
 		firstIn = false;
 		map = { 
 			{ LightSourceShader, new Shader("Ressources/Shaders/LightSource.shader") },
-			{ MaterialShader, new Shader("Ressources/Shaders/MaterialLumiere.shader")} 
+			{ MaterialShader, new Shader("Ressources/Shaders/Material.shader")} 
 		};
 	}
 

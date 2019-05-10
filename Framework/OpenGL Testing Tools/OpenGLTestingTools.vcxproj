@@ -31,6 +31,7 @@
     <ClCompile Include="Sources\MeshFactory.cpp" />
     <ClCompile Include="Sources\Object.cpp" />
     <ClCompile Include="Sources\ObjectFactory.cpp" />
+    <ClCompile Include="Sources\Parseur.cpp" />
     <ClCompile Include="Sources\PhysicObject.cpp" />
     <ClCompile Include="Sources\Positionable.cpp" />
     <ClCompile Include="Sources\Renderer.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Sources\MeshFactory.h" />
     <ClInclude Include="Sources\Object.h" />
     <ClInclude Include="Sources\ObjectFactory.h" />
+    <ClInclude Include="Sources\Parseur.h" />
     <ClInclude Include="Sources\PhysicObject.h" />
     <ClInclude Include="Sources\Positionable.h" />
     <ClInclude Include="Sources\Renderer.h" />
@@ -481,6 +483,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Ressources\objs\sphere.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Ressources\Xml\level1.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7CFA5829-3EF7-4ECF-A3C2-D21BD7EE1F95}</ProjectGuid>

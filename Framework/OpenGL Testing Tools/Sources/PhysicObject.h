@@ -3,7 +3,7 @@
 #include "Force.h"
 #include <vector>
 
-enum Sides {LEFTSIDE, RIGHTSIDE, TOP, BOT, FRONT, BEHIND};
+enum Sides { LEFTSIDE, RIGHTSIDE, TOP, BOT, FRONT, BEHIND };
 
 class PhysicObject
 {
@@ -30,13 +30,12 @@ public:
 
 	std::vector<glm::vec3> GetCornersPos(glm::vec3& position);
 
-    bool CollidesWith(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition);
-    void OnCollision(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition);
+	bool CollidesWith(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition);
+	void OnCollision(PhysicObject* that, Sides* collisionSide, glm::vec3& thisPosition, glm::vec3& thatPosition);
 
 	glm::vec3 GetSpeed();
 	void SetSpeed(glm::vec3 speed);
 	void SetBounceCoeff(double coeff);
-	bool IsAnchor(){return m_isAnchor;}
+	bool IsAnchor() { return m_isAnchor; }
 	void Scale(float xFactor, float yFactor, float zFactor);
 };
-

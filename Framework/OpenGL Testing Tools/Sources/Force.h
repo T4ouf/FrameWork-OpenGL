@@ -1,8 +1,7 @@
 #pragma once
 #include "glm/glm.hpp"
 
-class Force
-{
+class Force{
 private:
 	glm::vec3 m_direction;
 public:
@@ -26,4 +25,3 @@ public:
 	Force MultiplyByMatrix(glm::mat4 matrix);
 	Force Reverse();
 };
-

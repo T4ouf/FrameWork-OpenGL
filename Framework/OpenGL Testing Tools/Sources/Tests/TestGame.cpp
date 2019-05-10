@@ -6,6 +6,8 @@
 #include "Object.h"
 #include "ObjectFactory.h"
 #include "Shader.h"
+#include "Parseur.h"
+#include "Application.h"
 
 #include "imgui/imgui.h"
 
@@ -20,17 +22,47 @@
 namespace testGame {
 	Object* player;
 
+	Application app;
 
-	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -3.0f));
-	Force* leftForce = new Force(glm::vec3(-3.0f, 0.0f, 0.0f));
-	Force* upForce = new Force(glm::vec3(0.0f, 6.0f, 0.0f));
+
+	Force* forwardForce = new Force(glm::vec3(0.0f, 0.0f, -0.5f));
+	Force* rightForce = new Force(glm::vec3(0.4f, 0.0f, 0.0f));
+	Force* upForce = new Force(glm::vec3(0.0f, 1.5f, 0.0f));
 
 	Object* platform;
-	
-	void jump_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-		if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+
+	glm::vec3 oldCameraPosition(0.0f);
+
+	double JUMP_COOLDOWN = 1.0, timeOfLastJump = 0.0;
+
+	bool isSprinting = false, canJump = true;
+
+	void jump() {
+		if (canJump) {
 			player->addForce(new Force(*upForce));
+			timeOfLastJump = glfwGetTime();
+			canJump = false;
+		}
 	}
+	ButtonFunction jumpCallback = jump;
+
+	void movement(float value) {
+		if (isSprinting)
+			value = value * 2.0f;
+		player->addForce(new Force(rightForce->MultiplyByScalar(value)));
+	}
+	AnalogButtonFunction sideMovement = movement;
+
+	void teleportation() {
+		if (player->getPosition().y + 150.0f <= 850.0f)
+			player->translate(glm::vec3(0.0f, 150.0f, 0.0f));
+	}
+	ButtonFunction teleportationCallback = teleportation;
+
+	void sprint() {
+		isSprinting = !isSprinting;
+	}
+	ButtonFunction sprintCallback = sprint;
 
 	TestGame::~TestGame() {
 		delete Gold;
@@ -59,13 +91,25 @@ namespace testGame {
 
 		lastFrame = currentFrame;
 
-		ProcessInput(glfwGetCurrentContext());
+		app.processInput();
 
 		//Slow down
 		m_player->addForce(new Force(glm::vec3(-0.1f * m_player->GetSpeed().x, 0.0f, -0.1f * m_player->GetSpeed().z)));
 
-		m_scene->retrieveCamera().m_position = m_player->getPosition() + glm::vec3(0.0f, 200.0f, 650.0f);
+		m_scene->UpdatePhysic(deltaTime);
+		//Only move camera when big movement is achieved
+		glm::vec3 newCameraPosition(m_player->getPosition() + glm::vec3(0.0f, 20.0f, 250.0f));
+		if ((oldCameraPosition - newCameraPosition).length() > 0.8f) {
+			oldCameraPosition = newCameraPosition;
+			m_scene->retrieveCamera().m_position = newCameraPosition;
+		}
 
+		if (player->getPosition().y < -200.0f)
+			glfwSetWindowShouldClose(glfwGetCurrentContext(), true);
+
+		if (currentFrame - timeOfLastJump > JUMP_COOLDOWN) {
+			canJump = true;
+		}
 	}
 
 	void TestGame::OnRender() {
@@ -78,14 +122,24 @@ namespace testGame {
 		c.translate(m_translation);
 		m_scene->setLightColor(glm::vec3(m_CouleurLumiere[0], m_CouleurLumiere[1], m_CouleurLumiere[2]));
 
-		//if (frameNumber % 4 == 0) { //ralentissement fort de l'animation
-		m_scene->UpdatePhysic(deltaTime);		//BUG PHYSICS COLLISION
-		//}
-
 		m_scene->Render(Renderer::getInstance());
-		
+		/*
+		if (frameNumber % 15 == 0) {
+			std::cout << "Player rightSide : " << m_player->getPosition().x + (m_player->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Player leftSide : " << m_player->getPosition().x - (m_player->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform rightSide : " << platform->getPosition().x + (platform->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform leftSide : " << platform->getPosition().x - (platform->m_physicObject->m_width / 2.0) << std::endl;
+			std::cout << "Platform position : " << glm::to_string(platform->getPosition()) << std::endl;
+			std::cout << "Player position : " << glm::to_string(m_player->getPosition()) << std::endl << std::endl;
+		}*/
 		frameNumber++;
 
+		if (isSprinting) {
+			player->setMaterial(LampMaterial);
+		}
+		else {
+			player->setMaterial(Ruby);
+		}
 	}
 
 	void TestGame::OnImGuiRender() {
@@ -185,15 +239,21 @@ namespace testGame {
 
 		m_scene = new Scene();
 
-		Object* Platform = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 850, 150, true, m_Material);
-		Object* Boxe = ObjectFactory::CreateBoxe(glm::vec3(0.0f, 0.0f, 0.0f), 75, 50, 150, 150, false, Ruby);
+		Parseur p = Parseur("Ressources/Xml/level1.xml");
+
+		Scene& sceneRef = *m_scene;
+		Level lvl = p.parse(sceneRef);
+
+		//Object* Platform = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 850, 150, true, m_Material);
+		Object* Boxe = ObjectFactory::CreateCube(glm::vec3(0.0f, 0.0f, 0.0f), 20, 15, false, Ruby);
 		m_player = Boxe;
 		player = Boxe;
 		m_player->SetBounceCoeff(0.0);
-		platform = Platform;
+		m_player->translate(lvl.startPosX, lvl.startPosY, lvl.startPosZ);
+		//platform = Platform;
 
 		Light& l = m_scene->retrieveLight();
-		l.m_intensity = 500;
+		l.m_intensity = 5000;
 		l.setPosition(0, 175, 0);
 
 		Object* Lamp = ObjectFactory::CreateCube(l.getPosition(), 25, 1, true, LampMaterial);
@@ -201,11 +261,20 @@ namespace testGame {
 
 		Camera& camera = m_scene->retrieveCamera();
 		camera.translate(glm::vec3(0.0f, 200.0f, 650.0f));
-		Platform->translate(glm::vec3(0.0f, -450.0f, 0.0f));
-		m_scene->addObject(Platform);
+		//Platform->translate(glm::vec3(0.0f, -450.0f, 0.0f));
+		//m_scene->addObject(Platform);
 		m_scene->addObject(Boxe);
 		m_scene->addObject(Lamp);
+
+		app = Application();
+		app.mapButtonInput(BUTTON_A, jumpCallback);
+		app.mapAnalogButtonInput(ANALOG_LEFTSTICK_X, sideMovement);
+		app.mapButtonInput(BUTTON_X, teleportationCallback);
+		app.mapButtonInput(BUTTON_B, sprintCallback);
 	}
+
+
+	/*
 
 	// Execute des fonctions selon la touche presse :
 	// Demande à GLFW si une touche qui nous interesse est pressé et agit en consequence
@@ -261,7 +330,7 @@ namespace testGame {
 		glfwSetKeyCallback(window, jump_callback);
 		
 	}
-
+	*/
 	// glfw: whenever the window size changed (by OS or user resize) this callback function executes
 	// ---------------------------------------------------------------------------------------------
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height)

@@ -3,7 +3,7 @@
 
 
 
-Force::Force(glm::vec3 direction): m_direction(direction)
+Force::Force(glm::vec3 direction) : m_direction(direction)
 {
 }
 
@@ -34,4 +34,3 @@ Force Force::Reverse()
 {
 	return this->MultiplyByScalar(-1.0f);
 }
-
